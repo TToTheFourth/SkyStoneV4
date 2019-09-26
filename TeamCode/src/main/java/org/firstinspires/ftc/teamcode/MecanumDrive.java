@@ -85,8 +85,8 @@ public class MecanumDrive extends OpMode {
          * left motor and the rear right motor.
          */
         robot.frontLeftMotor.setPower(leftY_G1 + rightX_G1 - leftX_G1);
-        robot.rearLeftMotor.setPower(leftY_G1 + rightX_G1 + leftX_G1);
-        robot.rearRightMotor.setPower(leftY_G1 - rightX_G1 + leftX_G1);
+        robot.backLeftMotor.setPower(leftY_G1 + rightX_G1 + leftX_G1);
+        robot.backRightMotor.setPower(leftY_G1 - rightX_G1 + leftX_G1);
         robot.frontRightMotor.setPower(leftY_G1 - rightX_G1 - leftX_G1);
 
      /*

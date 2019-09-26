@@ -27,8 +27,8 @@ public class DiagonalOMNIDriveHardware {
     /* Public OpMode members. */
     public DcMotor frontLeftMotor   = null;
     public DcMotor frontRightMotor  = null;
-    public DcMotor rearLeftMotor   = null;
-    public DcMotor rearRightMotor  = null;
+    public DcMotor backLeftMotor   = null;
+    public DcMotor backRightMotor = null;
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
@@ -45,27 +45,27 @@ public class DiagonalOMNIDriveHardware {
         // Define and Initialize Motors
         frontLeftMotor   = hwMap.get(DcMotor.class, "fleft");
         frontRightMotor  = hwMap.get(DcMotor.class, "fright");
-        rearLeftMotor   = hwMap.get(DcMotor.class, "rleft");
-        rearRightMotor  = hwMap.get(DcMotor.class, "rright");
+        backLeftMotor   = hwMap.get(DcMotor.class, "bleft");
+        backRightMotor = hwMap.get(DcMotor.class, "bright");
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         frontRightMotor.setDirection(DcMotor.Direction.FORWARD);
-        rearLeftMotor.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
-        rearRightMotor.setDirection(DcMotor.Direction.FORWARD);
+        backLeftMotor.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+        backRightMotor.setDirection(DcMotor.Direction.FORWARD);
 
 
         // Set to FORWARD if using AndyMark motors
         // Set all motors to zero power
         frontLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
-        rearLeftMotor.setPower(0);
-        rearRightMotor.setPower(0);
+        backLeftMotor.setPower(0);
+        backRightMotor.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         frontLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rearLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rearRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servos.
 
