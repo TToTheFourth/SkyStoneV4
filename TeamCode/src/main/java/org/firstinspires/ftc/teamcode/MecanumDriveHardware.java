@@ -45,8 +45,8 @@ public class MecanumDriveHardware {
         // Define and Initialize Motors
         frontLeftMotor   = hwMap.get(DcMotor.class, "fleft");
         frontRightMotor  = hwMap.get(DcMotor.class, "fright");
-        backLeftMotor = hwMap.get(DcMotor.class, "rleft");
-        backRightMotor = hwMap.get(DcMotor.class, "rright");
+        backLeftMotor = hwMap.get(DcMotor.class, "bleft");
+        backRightMotor = hwMap.get(DcMotor.class, "bright");
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         frontRightMotor.setDirection(DcMotor.Direction.FORWARD);
         backLeftMotor.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
@@ -66,6 +66,11 @@ public class MecanumDriveHardware {
         frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Define and initialize ALL installed servos.
 

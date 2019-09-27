@@ -60,6 +60,7 @@ public class MecanumDrive extends OpMode {
         double leftY_G2;
         double rightX_G2;
         double rightY_G2;
+        double factor = 2;
 
         rightX_G1 = gamepad1.right_stick_x;
         rightY_G1 = -gamepad1.right_stick_y;
@@ -69,6 +70,15 @@ public class MecanumDrive extends OpMode {
         leftY_G2 = gamepad2.left_stick_y;
         rightX_G2 = gamepad2.right_stick_x;
         rightY_G2 = gamepad2.right_stick_y;
+
+        if(gamepad1.y){
+            factor = 1;
+        }else if(gamepad1.a) {
+            factor = 3;
+        }else if(gamepad1.x){
+            factor = 2;
+        }
+
 
         /*
         <<<<DRIVETRAIN>>>>
@@ -84,10 +94,10 @@ public class MecanumDrive extends OpMode {
          * right motor and the rear left motor from the front
          * left motor and the rear right motor.
          */
-        robot.frontLeftMotor.setPower(leftY_G1 + rightX_G1 - leftX_G1);
-        robot.backLeftMotor.setPower(leftY_G1 + rightX_G1 + leftX_G1);
-        robot.backRightMotor.setPower(leftY_G1 - rightX_G1 + leftX_G1);
-        robot.frontRightMotor.setPower(leftY_G1 - rightX_G1 - leftX_G1);
+        robot.frontLeftMotor.setPower((leftY_G1 + rightX_G1 - leftX_G1)/factor);
+        robot.backLeftMotor.setPower((leftY_G1 + rightX_G1 + leftX_G1)/factor);
+        robot.backRightMotor.setPower((leftY_G1 - rightX_G1 + leftX_G1)/factor);
+        robot.frontRightMotor.setPower((leftY_G1 - rightX_G1 - leftX_G1)/factor);
 
      /*
      * Code to run ONCE after the driver hits STOP

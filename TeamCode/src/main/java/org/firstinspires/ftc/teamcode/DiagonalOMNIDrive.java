@@ -67,6 +67,7 @@ public class DiagonalOMNIDrive extends OpMode {
         double ch2;
         double ch3;
         double ch4;
+        double factor = 2;
         /*
         <<<<MOTORS>>>>
         */
@@ -79,10 +80,18 @@ public class DiagonalOMNIDrive extends OpMode {
         ch3 = -gamepad1.left_stick_y;
         ch4 = -gamepad1.left_stick_x;
 
-        robot.frontLeftMotor.setPower(ch3 - ch4 + ch1);
-        robot.backLeftMotor.setPower(ch3 + ch4 + ch1);
-        robot.backRightMotor.setPower(ch3 - ch4 - ch1);
-        robot.frontRightMotor.setPower(ch3 + ch4 - ch1);
+        if(gamepad1.y){
+            factor = 1;
+        }else if(gamepad1.a) {
+            factor = 3;
+        }else if(gamepad1.x){
+            factor = 2;
+        }
+
+        robot.frontLeftMotor.setPower((ch3 - ch4 + ch1)/factor);
+        robot.backLeftMotor.setPower((ch3 + ch4 + ch1)/factor);
+        robot.backRightMotor.setPower((ch3 - ch4 - ch1)/factor);
+        robot.frontRightMotor.setPower((ch3 + ch4 - ch1)/factor);
         /*
         <<<SERVOS>>>
         */

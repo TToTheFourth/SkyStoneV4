@@ -1,27 +1,24 @@
 package org.firstinspires.ftc.teamcode;
 
 
-import android.view.Display;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp
 public class ShowBotControls extends LinearOpMode {
 
-    private DcMotor leftMotorB;
-    private DcMotor leftMotorF;
-    private DcMotor rightMotorB;
-    private DcMotor rightMotorF;
+    private DcMotor backLeftMotor;
+    private DcMotor frontLeftMotor;
+    private DcMotor backRightMotor;
+    private DcMotor frontRightMotor;
 
     @Override
     public void runOpMode() {
-        leftMotorB = hardwareMap.get(DcMotor.class, "motor0");
-        leftMotorF = hardwareMap.get(DcMotor.class, "motor1");
-        rightMotorF = hardwareMap.get(DcMotor.class, "motor2");
-        rightMotorB = hardwareMap.get(DcMotor.class, "motor3");
+        backLeftMotor = hardwareMap.get(DcMotor.class, "motor0");
+        frontLeftMotor = hardwareMap.get(DcMotor.class, "motor1");
+        frontRightMotor = hardwareMap.get(DcMotor.class, "motor2");
+        backRightMotor = hardwareMap.get(DcMotor.class, "motor3");
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -34,10 +31,10 @@ public class ShowBotControls extends LinearOpMode {
         double tgtPowerRF = 0;
         double factor = 2;
 
-        leftMotorF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightMotorF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftMotorB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightMotorB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         while (opModeIsActive()) {
 
@@ -54,10 +51,10 @@ public class ShowBotControls extends LinearOpMode {
                 factor = 2;
             }
 
-            leftMotorF.setPower(tgtPowerLF/factor);
-            leftMotorB.setPower(tgtPowerLB/factor);
-            rightMotorF.setPower(tgtPowerRF/factor);
-            rightMotorB.setPower(tgtPowerRB/factor);
+            frontLeftMotor.setPower(tgtPowerLF/factor);
+            backLeftMotor.setPower(tgtPowerLB/factor);
+            frontRightMotor.setPower(tgtPowerRF/factor);
+            backRightMotor.setPower(tgtPowerRB/factor);
 
             telemetry.addData("Target Power Left Back", tgtPowerLB);
             telemetry.addData("Target Power Right Back", tgtPowerRB);
@@ -66,10 +63,10 @@ public class ShowBotControls extends LinearOpMode {
 
         }
 
-        leftMotorF.setPower(0);
-        leftMotorB.setPower(0);
-        rightMotorF.setPower(0);
-        rightMotorB.setPower(0);
+        frontLeftMotor.setPower(0);
+        backLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        backRightMotor.setPower(0);
 
     }
 
