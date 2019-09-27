@@ -25,10 +25,10 @@ public class DiagonalOMNIDriveHardware {
      */
 
     /* Public OpMode members. */
-    public DcMotor frontLeftMotor   = null;
-    public DcMotor frontRightMotor  = null;
-    public DcMotor backLeftMotor   = null;
-    public DcMotor backRightMotor = null;
+    public DcMotor frontLeftMotor;
+    public DcMotor frontRightMotor;
+    public DcMotor backLeftMotor;
+    public DcMotor backRightMotor;
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
@@ -43,10 +43,10 @@ public class DiagonalOMNIDriveHardware {
         hwMap = ahwMap;
 
         // Define and Initialize Motors
-        frontLeftMotor   = hwMap.get(DcMotor.class, "fleft");
-        frontRightMotor  = hwMap.get(DcMotor.class, "fright");
-        backLeftMotor   = hwMap.get(DcMotor.class, "bleft");
-        backRightMotor = hwMap.get(DcMotor.class, "bright");
+        backLeftMotor = ahwMap.get(DcMotor.class, "motor0");
+        frontLeftMotor = ahwMap.get(DcMotor.class, "motor1");
+        frontRightMotor = ahwMap.get(DcMotor.class, "motor2");
+        backRightMotor = ahwMap.get(DcMotor.class, "motor3");
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         frontRightMotor.setDirection(DcMotor.Direction.FORWARD);
         backLeftMotor.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
