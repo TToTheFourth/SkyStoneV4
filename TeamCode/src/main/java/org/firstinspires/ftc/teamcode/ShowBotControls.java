@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
 public class ShowBotControls extends LinearOpMode {
@@ -12,6 +13,7 @@ public class ShowBotControls extends LinearOpMode {
     private DcMotor frontLeftMotor;
     private DcMotor backRightMotor;
     private DcMotor frontRightMotor;
+    private Servo iconServo;
 
     @Override
     public void runOpMode() {
@@ -19,6 +21,7 @@ public class ShowBotControls extends LinearOpMode {
         frontLeftMotor = hardwareMap.get(DcMotor.class, "motor1");
         frontRightMotor = hardwareMap.get(DcMotor.class, "motor2");
         backRightMotor = hardwareMap.get(DcMotor.class, "motor3");
+        iconServo = hardwareMap.get(Servo.class, "servo0");
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -29,6 +32,7 @@ public class ShowBotControls extends LinearOpMode {
         double tgtPowerRB = 0;
         double tgtPowerLF = 0;
         double tgtPowerRF = 0;
+        double tgtPowerIconServo = 0;
         double factor = 2;
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -38,10 +42,13 @@ public class ShowBotControls extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            tgtPowerLB = gamepad1.left_stick_y;
-            tgtPowerRF = -gamepad1.right_stick_y;
-            tgtPowerLF = gamepad1.left_stick_y;
-            tgtPowerRB = -gamepad1.right_stick_y;
+            iconServo.setPosition(90);
+
+            tgtPowerLB = -gamepad1.left_stick_y;
+            tgtPowerRF = gamepad1.right_stick_y;
+            tgtPowerLF = -gamepad1.left_stick_y;
+            tgtPowerRB = gamepad1.right_stick_y;
+            tgtPowerIconServo = this.gamepad1.left_trigger;
 
             if(gamepad1.y){
                 factor = 1;
@@ -55,6 +62,7 @@ public class ShowBotControls extends LinearOpMode {
             backLeftMotor.setPower(tgtPowerLB/factor);
             frontRightMotor.setPower(tgtPowerRF/factor);
             backRightMotor.setPower(tgtPowerRB/factor);
+            iconServo.setPosition(tgtPowerIconServo);
 
             telemetry.addData("Target Power Left Back", tgtPowerLB);
             telemetry.addData("Target Power Right Back", tgtPowerRB);
