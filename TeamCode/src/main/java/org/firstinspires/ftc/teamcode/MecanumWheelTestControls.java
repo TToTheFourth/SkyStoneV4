@@ -48,14 +48,14 @@ public class MecanumWheelTestControls extends LinearOpMode {
                 double rightX_G2;
                 double rightY_G2;
 
-                rightX_G1 = gamepad1.right_stick_x;
-                rightY_G1 = -gamepad1.right_stick_y;
-                leftX_G1 = -gamepad1.left_stick_x;
-                leftY_G1 = -gamepad1.left_stick_y;
-                leftX_G2 = gamepad2.left_stick_x;
-                leftY_G2 = gamepad2.left_stick_y;
-                rightX_G2 = gamepad2.right_stick_x;
-                rightY_G2 = gamepad2.right_stick_y;
+                rightX_G1 = gamepad1.right_stick_y;
+                rightY_G1 = -gamepad1.right_stick_x;
+                leftX_G1 = -gamepad1.left_stick_y;
+                leftY_G1 = -gamepad1.left_stick_x;
+                leftX_G2 = gamepad2.left_stick_y;
+                leftY_G2 = gamepad2.left_stick_x;
+                rightX_G2 = gamepad2.right_stick_y;
+                rightY_G2 = gamepad2.right_stick_x;
 
                 if (gamepad1.y) {
                     factor = 1;
