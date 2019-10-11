@@ -43,7 +43,7 @@ public class OmniWheelTestControls extends LinearOpMode {
             double ch4;
 
             ch1 = gamepad1.right_stick_x;
-            ch2 = -gamepad1.right_stick_y;
+            ch2 = gamepad1.right_stick_y;
             ch3 = -gamepad1.left_stick_y;
             ch4 = -gamepad1.left_stick_x;
 
