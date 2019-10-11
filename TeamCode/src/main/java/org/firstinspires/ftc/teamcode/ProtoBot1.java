@@ -24,12 +24,11 @@ public class ProtoBot1 extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-          double  rackPower = gamepad1.left_stick_y;
+          double  rackPower = gamepad1.left_stick_y; //5
 
             rackMotor.setPower (rackPower);
 
             telemetry.addData("Target rack Power", rackPower);
-
             telemetry.update();
         }
 
