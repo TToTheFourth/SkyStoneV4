@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode.vision;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -138,7 +139,23 @@ public class VuNavWithDriving extends LinearOpMode {
     private float phoneYRotate    = 0;
     private float phoneZRotate    = 0;
 
+    //TODO: motors
+    private DcMotor backLeftMotor;
+    private DcMotor frontLeftMotor;
+    private DcMotor backRightMotor;
+    private DcMotor frontRightMotor;
+
+
     @Override public void runOpMode() {
+
+        backLeftMotor = hardwareMap.get(DcMotor.class, "motor0");
+        frontLeftMotor = hardwareMap.get(DcMotor.class, "motor1");
+        frontRightMotor = hardwareMap.get(DcMotor.class, "motor2");
+        backRightMotor = hardwareMap.get(DcMotor.class, "motor3");
+
+        telemetry.addData("Status", "Initialized");
+        telemetry.update();
+
         /*
          * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
          * We can pass Vuforia the handle to a camera preview resource (on the RC phone);
@@ -314,6 +331,17 @@ public class VuNavWithDriving extends LinearOpMode {
 
          waitForStart();
 
+        double tgtPowerLB = 0;
+        double tgtPowerRB = 0;
+        double tgtPowerLF = 0;
+        double tgtPowerRF = 0;
+        double factor = 2;
+
+        frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         // Note: To use the remote camera preview:
         // AFTER you hit Init on the Driver Station, use the "options menu" to select "Camera Stream"
         // Tap the preview window to receive a fresh image.
@@ -350,8 +378,16 @@ public class VuNavWithDriving extends LinearOpMode {
                 // express the rotation of the robot in degrees.
                 Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
                 telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
-                if (x == -20) {
-                    //TODO: get motors here
+                if (x <= -20) {
+                    frontLeftMotor.setPower(0.5);
+                    backLeftMotor.setPower(0.5);
+                    backRightMotor.setPower(0.5);
+                    frontRightMotor.setPower(0.5);
+                } else {
+                    frontLeftMotor.setPower(0);
+                    backLeftMotor.setPower(0);
+                    backRightMotor.setPower(0);
+                    frontRightMotor.setPower(0);
                 }
             }
             else {
