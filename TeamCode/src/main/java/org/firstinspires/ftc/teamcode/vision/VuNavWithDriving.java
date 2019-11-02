@@ -156,6 +156,16 @@ public class VuNavWithDriving extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
+        double rightX_G1;
+        double rightY_G1;
+        double leftX_G1;
+        double leftY_G1;
+        double leftX_G2;
+        double leftY_G2;
+        double rightX_G2;
+        double rightY_G2;
+
+
         /*
          * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
          * We can pass Vuforia the handle to a camera preview resource (on the RC phone);
@@ -331,11 +341,16 @@ public class VuNavWithDriving extends LinearOpMode {
 
          waitForStart();
 
-        double tgtPowerLB = 0;
-        double tgtPowerRB = 0;
-        double tgtPowerLF = 0;
-        double tgtPowerRF = 0;
-        double factor = 2;
+//        double factor = 2;
+//        double tgtPowerLB = leftY_G1 + rightX_G1 + leftX_G1;
+//        double tgtPowerRB = leftY_G1 - rightX_G1 + leftX_G1;
+//        double tgtPowerLF = leftY_G1 + rightX_G1 - leftX_G1;
+//        double tgtPowerRF = leftY_G1 - rightX_G1 - leftX_G1;
+        double tgtPowerLB = 0.5;
+        double tgtPowerRB = -0.5;
+        double tgtPowerLF = 0.5;
+        double tgtPowerRF = -0.5;
+
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -379,10 +394,19 @@ public class VuNavWithDriving extends LinearOpMode {
                 Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
                 telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
                 if (x <= -20) {
-                    frontLeftMotor.setPower(0.5);
-                    backLeftMotor.setPower(0.5);
-                    backRightMotor.setPower(0.5);
-                    frontRightMotor.setPower(0.5);
+                    rightX_G1 = 0.5;
+                    rightY_G1 = -0.5;
+                    leftX_G1 = 0;
+                    leftY_G1 = 0;
+                    leftX_G2 = 0;
+                    leftY_G2 = 0;
+                    rightX_G2 = 0.5;
+                    rightY_G2 = -0.5;
+
+                    frontLeftMotor.setPower(tgtPowerLF);
+                    backLeftMotor.setPower(tgtPowerLB);
+                    backRightMotor.setPower(tgtPowerRB);
+                    frontRightMotor.setPower(tgtPowerRF);
                 } else {
                     frontLeftMotor.setPower(0);
                     backLeftMotor.setPower(0);
