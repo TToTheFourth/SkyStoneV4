@@ -394,15 +394,6 @@ public class VuNavWithDriving extends LinearOpMode {
                 Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
                 telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
                 if (x <= -20) {
-                    rightX_G1 = 0.5;
-                    rightY_G1 = -0.5;
-                    leftX_G1 = 0;
-                    leftY_G1 = 0;
-                    leftX_G2 = 0;
-                    leftY_G2 = 0;
-                    rightX_G2 = 0.5;
-                    rightY_G2 = -0.5;
-
                     frontLeftMotor.setPower(tgtPowerLF);
                     backLeftMotor.setPower(tgtPowerLB);
                     backRightMotor.setPower(tgtPowerRB);
