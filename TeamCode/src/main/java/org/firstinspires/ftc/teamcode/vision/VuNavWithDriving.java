@@ -417,4 +417,22 @@ public class VuNavWithDriving extends LinearOpMode {
         // Disable Tracking when we are done;
         targetsSkyStone.deactivate();
     }
+    private float getDirection(float x, float y, float heading) {
+        double h = (double) heading;
+        double x2 = (double) x;
+        double y2 = (double) y;
+        double m1 = y2 / x2;
+        double m2 = Math.tan(h);
+        double theta = Math.atan(((m1 - m2)/(1 + m1 * m2)));
+        return (float) theta;
+    }
+    private float getDistance(float xp, float yp, float xr, float yr) {
+        double xp1 = (double) xp;
+        double yp1 = (double) yp;
+        double xr1 = (double) xr;
+        double yr1 = (double) yr;
+        double length = Math.sqrt(Math.pow(xp1 - xr1, 2) + Math.pow(yp1 - yr1, 2));
+        return (float) length;
+    }
 }
+
