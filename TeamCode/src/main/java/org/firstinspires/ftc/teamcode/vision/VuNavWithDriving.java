@@ -156,16 +156,6 @@ public class VuNavWithDriving extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        double rightX_G1;
-        double rightY_G1;
-        double leftX_G1;
-        double leftY_G1;
-        double leftX_G2;
-        double leftY_G2;
-        double rightX_G2;
-        double rightY_G2;
-
-
         /*
          * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
          * We can pass Vuforia the handle to a camera preview resource (on the RC phone);
