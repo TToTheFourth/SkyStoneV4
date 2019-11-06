@@ -362,6 +362,12 @@ public class VuNavWithDriving extends LinearOpMode {
         // Tap the preview window to receive a fresh image.
 
         targetsSkyStone.activate();
+
+        frontLeftMotor.setPower(tgtPowerLF);
+        backLeftMotor.setPower(tgtPowerLB);
+        backRightMotor.setPower(tgtPowerRB);
+        frontRightMotor.setPower(tgtPowerRF);
+
         while (!isStopRequested()) {
 
             // check all the trackable targets to see which one (if any) is visible.
@@ -380,6 +386,8 @@ public class VuNavWithDriving extends LinearOpMode {
                     break;
                 }
             }
+
+
 
 
             // Provide feedback as to where the robot is located (if we know).
@@ -410,6 +418,11 @@ public class VuNavWithDriving extends LinearOpMode {
             }
             telemetry.update();
         }
+
+        frontLeftMotor.setPower(0);
+        backLeftMotor.setPower(0);
+        backRightMotor.setPower(0);
+        frontRightMotor.setPower(0);
 
         // Disable Tracking when we are done;
         targetsSkyStone.deactivate();
