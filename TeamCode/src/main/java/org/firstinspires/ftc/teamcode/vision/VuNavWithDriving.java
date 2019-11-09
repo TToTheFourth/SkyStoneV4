@@ -454,6 +454,13 @@ public class VuNavWithDriving extends LinearOpMode {
             double m2 = Math.tan(h);
             theta = (float) Math.atan(((m1 - m2) / (1 + m1 * m2)));
         }
+        if (y2 > y1 && y1 > 0) {
+            theta = -180 - theta;
+        } else if (y1 > y2 && y2 <0) {
+            theta = 180 + theta;
+        } else {
+            theta = theta;
+        }
         return theta;
     }
     private float getDistance(float xp, float yp, float xr, float yr) {
