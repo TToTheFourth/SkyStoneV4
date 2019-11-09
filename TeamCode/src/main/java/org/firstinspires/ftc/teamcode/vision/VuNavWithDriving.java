@@ -358,6 +358,9 @@ public class VuNavWithDriving extends LinearOpMode {
         backRightMotor.setPower(tgtPowerRB);
         frontRightMotor.setPower(tgtPowerRF);
 
+        float xtarget = -20;
+        float ytarget = -20;
+
         while (!isStopRequested()) {
 
             // check all the trackable targets to see which one (if any) is visible.
@@ -384,13 +387,29 @@ public class VuNavWithDriving extends LinearOpMode {
             if (targetVisible) {
                 // express position (translation) of robot in inches.
                 VectorF translation = lastLocation.getTranslation();
-                float x = translation.get(0) / mmPerInch;
+                //float x = translation.get(0) / mmPerInch;
                 telemetry.addData("Pos (in)", "{X, Y, Z} = %.1f, %.1f, %.1f",
                         translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch);
+
+
+                float x = translation.get(0);
+                float y = translation.get(1);
+                float z = translation.get(2);
+
+
 
                 // express the rotation of the robot in degrees.
                 Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
                 telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
+
+                float roll = rotation.firstAngle;
+                float pitch = rotation.secondAngle;
+                float heading = rotation.thirdAngle;
+
+                float rotate = this.getDirection(xtarget, ytarget, x, y, heading);
+                float distance = getDistance(xtarget, ytarget, x, y);
+
+
                 if (x <= -20) {
                     frontLeftMotor.setPower(tgtPowerLF);
                     backLeftMotor.setPower(tgtPowerLB);
@@ -417,14 +436,25 @@ public class VuNavWithDriving extends LinearOpMode {
         // Disable Tracking when we are done;
         targetsSkyStone.deactivate();
     }
-    private float getDirection(float x, float y, float heading) {
+    private float getDirection(float x, float y, float xr, float yr, float heading) {
         double h = (double) heading;
+        double x1 = (double) xr;
+        double y1 = (double) yr;
         double x2 = (double) x;
         double y2 = (double) y;
-        double m1 = y2 / x2;
-        double m2 = Math.tan(h);
-        double theta = Math.atan(((m1 - m2)/(1 + m1 * m2)));
-        return (float) theta;
+        float theta = 0;
+        if (x2 - x1 == 0) {
+            if (y2 - y1 >= 0) {
+                theta = 90;
+            } else {
+                theta = -90;
+            }
+        } else {
+            double m1 = (y2 - y1) / (x2 - x1);
+            double m2 = Math.tan(h);
+            theta = (float) Math.atan(((m1 - m2) / (1 + m1 * m2)));
+        }
+        return theta;
     }
     private float getDistance(float xp, float yp, float xr, float yr) {
         double xp1 = (double) xp;
