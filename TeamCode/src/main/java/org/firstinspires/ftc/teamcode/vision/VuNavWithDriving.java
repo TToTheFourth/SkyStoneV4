@@ -406,8 +406,8 @@ public class VuNavWithDriving extends LinearOpMode {
                 float pitch = rotation.secondAngle;
                 float heading = rotation.thirdAngle;
 
-                float rotate = this.getDirection(xtarget, ytarget, x, y, heading);
                 float distance = getDistance(xtarget, ytarget, x, y);
+                float rotate = this.getDirection(xtarget, ytarget, x, y, heading, distance);
 
 
                 if (x <= -20) {
@@ -436,12 +436,13 @@ public class VuNavWithDriving extends LinearOpMode {
         // Disable Tracking when we are done;
         targetsSkyStone.deactivate();
     }
-    private float getDirection(float x, float y, float xr, float yr, float heading) {
+    private float getDirection(float x, float y, float xr, float yr, float heading, float distance) {
         double h = (double) heading;
         double x1 = (double) xr;
         double y1 = (double) yr;
         double x2 = (double) x;
         double y2 = (double) y;
+        double distanceOG = (double) distance;
         float theta = 0;
         if (x2 - x1 == 0) {
             if (y2 - y1 >= 0) {
@@ -454,13 +455,22 @@ public class VuNavWithDriving extends LinearOpMode {
             double m2 = Math.tan(h);
             theta = (float) Math.atan(((m1 - m2) / (1 + m1 * m2)));
         }
-        if (y2 > y1 && y1 > 0) {
-            theta = -180 - theta;
-        } else if (y1 > y2 && y2 <0) {
-            theta = 180 + theta;
-        } else {
+        double newTheta = theta + h;
+        double xt = (float) Math.cos(newTheta) + xr;
+        double yt = (float) Math.sin(newTheta) + yr;
+        double dist = Math.sqrt(Math.pow(xt - x, 2) + Math.pow(yt - y, 2));
+        if (distanceOG > dist) {
             theta = theta;
+        }else{
+            theta = (float) (Math.PI - theta);
         }
+//        if (y2 > y1 && y1 > 0) {
+//            theta = -180 - theta;
+//        } else if (y1 > y2 && y2 <0) {
+//            theta = 180 + theta;
+//        } else {
+//            theta = theta;
+//        }
         return theta;
     }
     private float getDistance(float xp, float yp, float xr, float yr) {
