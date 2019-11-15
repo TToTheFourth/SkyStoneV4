@@ -446,9 +446,9 @@ public class VuNavWithDriving extends LinearOpMode {
         float theta = 0;
         if (x2 - x1 == 0) {
             if (y2 - y1 >= 0) {
-                theta = 90;
+                theta = (float) (( Math.PI / 2) - h);
             } else {
-                theta = -90;
+                theta = (float) (h - (Math.PI / 2));
             }
         } else {
             double m1 = (y2 - y1) / (x2 - x1);
@@ -463,6 +463,11 @@ public class VuNavWithDriving extends LinearOpMode {
             theta = theta;
         }else{
             theta = (float) (Math.PI - theta);
+        }
+        if (theta > Math.PI) {
+            theta = (float) (theta - 2.0 * Math.PI);
+        } else if (theta < -Math.PI) {
+            theta = (float) (theta + 2.0 * Math.PI);
         }
 //        if (y2 > y1 && y1 > 0) {
 //            theta = -180 - theta;
