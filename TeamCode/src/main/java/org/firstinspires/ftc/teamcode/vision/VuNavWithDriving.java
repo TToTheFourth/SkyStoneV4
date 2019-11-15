@@ -462,7 +462,7 @@ public class VuNavWithDriving extends LinearOpMode {
         if (distanceOG > dist) {
             theta = theta;
         }else{
-            theta = (float) (Math.PI - theta);
+            theta = (float) (Math.PI + theta);
         }
         if (theta > Math.PI) {
             theta = (float) (theta - 2.0 * Math.PI);
