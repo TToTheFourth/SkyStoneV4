@@ -54,11 +54,11 @@ public class RepresentoBotSupremeLeader {
         gyro.resetWithDirection(Gyro.RIGHT);
 
         // start the motors turning right
-        double p = -1 * power;
+        double p = power;
         leftMotorF.setPower(p);
         leftMotorB.setPower(p);
-        rightMotorF.setPower(p);
-        rightMotorB.setPower(p);
+        rightMotorF.setPower(-p);
+        rightMotorB.setPower(-p);
 
         // loop until the robot turns :) degrees
         double d = -1 * degrees;
@@ -80,8 +80,8 @@ public class RepresentoBotSupremeLeader {
 
         // start the motors turning right
         double p = power;
-        leftMotorF.setPower(p);
-        leftMotorB.setPower(p);
+        leftMotorF.setPower(-p);
+        leftMotorB.setPower(-p);
         rightMotorF.setPower(p);
         rightMotorB.setPower(p);
 
@@ -101,12 +101,11 @@ public class RepresentoBotSupremeLeader {
     }
 
     public void goForward(double power, double distance){
-        double p = -1 * power;
 
-        leftMotorF.setPower(p);
-        leftMotorB.setPower(p);
-        rightMotorF.setPower(power);
-        rightMotorB.setPower(power);
+        leftMotorF.setPower(power);
+        leftMotorB.setPower(power);
+        rightMotorF.setPower(-power);
+        rightMotorB.setPower(-power);
 
         myTimer.setCompareTime(inchesToTime(distance, power));
         myTimer.start();

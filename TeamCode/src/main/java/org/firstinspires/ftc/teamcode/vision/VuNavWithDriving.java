@@ -45,6 +45,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import org.firstinspires.ftc.teamcode.Gyro;
+import org.firstinspires.ftc.teamcode.RepresentoBotSupremeLeader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -367,6 +368,8 @@ public class VuNavWithDriving extends LinearOpMode {
 
         float xtarget = -20;
         float ytarget = -20;
+
+        RepresentoBotSupremeLeader robot = new RepresentoBotSupremeLeader(this);
 
         while (!isStopRequested()) {
 
