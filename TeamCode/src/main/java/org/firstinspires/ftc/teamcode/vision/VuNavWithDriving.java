@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.teamcode.vision;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -43,6 +44,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import org.firstinspires.ftc.teamcode.Gyro;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,12 +140,14 @@ public class VuNavWithDriving extends LinearOpMode {
     private float phoneXRotate    = 0;
     private float phoneYRotate    = 0;
     private float phoneZRotate    = 0;
+    private LinearOpMode opMode;
 
     //TODO: motors
     private DcMotor backLeftMotor;
     private DcMotor frontLeftMotor;
     private DcMotor backRightMotor;
     private DcMotor frontRightMotor;
+    private Gyro gyro;
 
 
     @Override public void runOpMode() {
@@ -152,7 +156,8 @@ public class VuNavWithDriving extends LinearOpMode {
         frontLeftMotor = hardwareMap.get(DcMotor.class, "motor1");
         frontRightMotor = hardwareMap.get(DcMotor.class, "motor2");
         backRightMotor = hardwareMap.get(DcMotor.class, "motor3");
-
+        BNO055IMU imu = hardwareMap.get(BNO055IMU.class, "imu");
+        gyro = new Gyro(imu, opMode);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -347,6 +352,8 @@ public class VuNavWithDriving extends LinearOpMode {
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        gyro.StartGyro();
+
         // Note: To use the remote camera preview:
         // AFTER you hit Init on the Driver Station, use the "options menu" to select "Camera Stream"
         // Tap the preview window to receive a fresh image.
@@ -409,6 +416,7 @@ public class VuNavWithDriving extends LinearOpMode {
                 float distance = getDistance(xtarget, ytarget, x, y);
                 float rotate = this.getDirection(xtarget, ytarget, x, y, heading, distance);
 
+                //add gyro here
 
                 if (x <= -20) {
                     frontLeftMotor.setPower(tgtPowerLF);
