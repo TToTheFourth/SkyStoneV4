@@ -31,6 +31,8 @@ public class MecanumWheelTestControls extends LinearOpMode {
         double tgtPowerLF = 0;
         double tgtPowerRF = 0;
         double factor = 2;
+        double multiplier = 1;
+        boolean wheelsOn;
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -65,11 +67,46 @@ public class MecanumWheelTestControls extends LinearOpMode {
                     factor = 2;
                 }
 
+                if(gamepad1.left_stick_y > 0) {
+                    wheelsOn = true;
+                } else if(gamepad1.left_stick_x > 0) {
+                    wheelsOn = true;
+                } else {
+                    wheelsOn = false;
+                }
 
-                frontLeftMotor.setPower((leftY_G1 + rightX_G1 - leftX_G1) / factor);
-                backLeftMotor.setPower((leftY_G1 + rightX_G1 + leftX_G1) / factor);
-                backRightMotor.setPower((leftY_G1 - rightX_G1 + leftX_G1) / factor);
-                frontRightMotor.setPower((leftY_G1 - rightX_G1 - leftX_G1) / factor);
+//                 if NOPOWER and power applied then state = ACCELERATE, percent = .1
+//                 if ACCELERATE and power applied and percent < 1 then percent = percent + .1
+//                 if ACCELERATE and power applied and percent >= 1 then state = STEADY
+//                 if power not applied then state = NOPOWER
+//                 if state = STEADY then state = STEADY
+//                 set power (power * percent)
+
+                if (wheelsOn = true) {
+                    for (int i = 0; i <= 10; i++) {
+                        if (i > 1) {
+                            multiplier = 0.1;
+                        } else if (i > 2 && i < 4) {
+                            multiplier = 0.2;
+                        } else if (i > 4 && i < 6) {
+                            multiplier = 0.4;
+                        } else if (i > 6 && i < 8) {
+                            multiplier = 0.6;
+                        } else if (i > 8 && i < 10) {
+                            multiplier = 0.8;
+                        } else if (i > 10) {
+                            multiplier = 1;
+                            break;
+                        }
+                    }
+                }
+
+
+                frontLeftMotor.setPower(((leftY_G1 + rightX_G1 - leftX_G1) / factor) * multiplier);
+                backLeftMotor.setPower(((leftY_G1 + rightX_G1 + leftX_G1) / factor) * multiplier);
+                backRightMotor.setPower(((leftY_G1 - rightX_G1 + leftX_G1) / factor) * multiplier);
+                frontRightMotor.setPower(((leftY_G1 - rightX_G1 - leftX_G1) / factor) * multiplier);
+
 
         }
 
