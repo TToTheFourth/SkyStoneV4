@@ -9,10 +9,12 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class RepresentoBotSupremeLeader {
 
     private Timer myTimer;
-    private DcMotor leftMotorB;
-    private DcMotor leftMotorF;
-    private DcMotor rightMotorB;
-    private DcMotor rightMotorF;
+
+    private DcMotor backLeftMotor;
+    private DcMotor frontLeftMotor;
+    private DcMotor frontRightMotor;
+    private DcMotor backRightMotor;
+
     private DcMotor slideMotorF;
     private DcMotor trackMotorF;
     private Servo foundationServo;
@@ -24,25 +26,30 @@ public class RepresentoBotSupremeLeader {
     public RepresentoBotSupremeLeader(LinearOpMode om) {
         this.opMode = om;
 
-        leftMotorB = opMode.hardwareMap.get(DcMotor.class, "motor0");
-        leftMotorF = opMode.hardwareMap.get(DcMotor.class, "motor1");
-        rightMotorF = opMode.hardwareMap.get(DcMotor.class, "motor2");
-        rightMotorB = opMode.hardwareMap.get(DcMotor.class, "motor3");
-        slideMotorF = opMode.hardwareMap.get(DcMotor.class, "motor4");
-        trackMotorF = opMode.hardwareMap.get(DcMotor.class, "motor5");
-        foundationServo = opMode.hardwareMap.get(Servo.class, "foundServo");
+
+        //backLeftMotor = hardwareMap.get(DcMotor.class, "motor0");
+        //frontLeftMotor = hardwareMap.get(DcMotor.class, "motor1");
+        //frontRightMotor = hardwareMap.get(DcMotor.class, "motor2");
+        //backRightMotor = hardwareMap.get(DcMotor.class, "motor3");
+
+        backLeftMotor = opMode.hardwareMap.get(DcMotor.class, "motor0");
+        frontLeftMotor = opMode.hardwareMap.get(DcMotor.class, "motor1");
+        frontRightMotor = opMode.hardwareMap.get(DcMotor.class, "motor2");
+        backRightMotor = opMode.hardwareMap.get(DcMotor.class, "motor3");//slideMotorF = opMode.hardwareMap.get(DcMotor.class, "motor4");
+        //trackMotorF = opMode.hardwareMap.get(DcMotor.class, "motor5");
+        //foundationServo = opMode.hardwareMap.get(Servo.class, "foundServo");
         BNO055IMU imu = opMode.hardwareMap.get(BNO055IMU.class, "imu");
         gyro = new Gyro(imu, opMode);
         myTimer = new Timer();
-        stoneServo = opMode.hardwareMap.get(Servo.class, "stoneServo");
+        //stoneServo = opMode.hardwareMap.get(Servo.class, "stoneServo");
 
         //stops movement of robot quickly.
-        leftMotorF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightMotorF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftMotorB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightMotorB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        slideMotorF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        trackMotorF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //slideMotorF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //trackMotorF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void startGyro(){
@@ -54,11 +61,14 @@ public class RepresentoBotSupremeLeader {
         gyro.resetWithDirection(Gyro.RIGHT);
 
         // start the motors turning right
-        double p = power;
-        leftMotorF.setPower(p);
-        leftMotorB.setPower(p);
-        rightMotorF.setPower(-p);
-        rightMotorB.setPower(-p);
+        double rightY_G1 = 0.0;
+        double rightX_G1 = -1.0 * power;
+        double leftX_G1 = 0.0;
+
+        frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
+        backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
+        backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
+        frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
 
         // loop until the robot turns :) degrees
         double d = -1 * degrees;
@@ -68,22 +78,25 @@ public class RepresentoBotSupremeLeader {
             }
         }
 
-        leftMotorF.setPower(0);
-        leftMotorB.setPower(0);
-        rightMotorF.setPower(0);
-        rightMotorB.setPower(0);
+        frontLeftMotor.setPower(0.0);
+        backLeftMotor.setPower(0.0);
+        backRightMotor.setPower(0.0);
+        frontRightMotor.setPower(0.0);
 
     }
 
     public void turnLeft(double degrees, double power) {
         gyro.resetWithDirection(Gyro.LEFT);
 
-        // start the motors turning right
-        double p = power;
-        leftMotorF.setPower(-p);
-        leftMotorB.setPower(-p);
-        rightMotorF.setPower(p);
-        rightMotorB.setPower(p);
+        // start the motors turning left
+        double rightY_G1 = 0.0;
+        double rightX_G1 = 1.0 * power;
+        double leftX_G1 = 0.0;
+
+        frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
+        backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
+        backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
+        frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
 
         // loop until the robot turns :) degrees
         double d = degrees;
@@ -93,19 +106,25 @@ public class RepresentoBotSupremeLeader {
             }
         }
 
-        leftMotorF.setPower(0);
-        leftMotorB.setPower(0);
-        rightMotorF.setPower(0);
-        rightMotorB.setPower(0);
+        frontLeftMotor.setPower(0.0);
+        backLeftMotor.setPower(0.0);
+        backRightMotor.setPower(0.0);
+        frontRightMotor.setPower(0.0);
 
     }
 
+    double factor = 1.0;
     public void goForward(double power, double distance){
 
-        leftMotorF.setPower(power);
-        leftMotorB.setPower(power);
-        rightMotorF.setPower(-power);
-        rightMotorB.setPower(-power);
+
+        double rightY_G1 = 1.0 * power;
+        double rightX_G1 = 0.0;
+        double leftX_G1 = 0.0;
+
+        frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
+        backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
+        backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
+        frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
 
         myTimer.setCompareTime(inchesToTime(distance, power));
         myTimer.start();
@@ -116,11 +135,12 @@ public class RepresentoBotSupremeLeader {
             }
         }
 
-        leftMotorF.setPower(0);
-        leftMotorB.setPower(0);
-        rightMotorF.setPower(0);
-        rightMotorB.setPower(0);
+        frontLeftMotor.setPower(0.0);
+        backLeftMotor.setPower(0.0);
+        backRightMotor.setPower(0.0);
+        frontRightMotor.setPower(0.0);
     }
+
     public long inchesToTime(double inches, double power) {
         return (long) (0.0384 * inches * 500.0 / power);
     }

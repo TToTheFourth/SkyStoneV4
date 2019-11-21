@@ -81,7 +81,7 @@ public class MecanumWheelTestControls extends LinearOpMode {
 //                 if power not applied then state = NOPOWER
 //                 if state = STEADY then state = STEADY
 //                 set power (power * percent)
-
+/*
                 if (wheelsOn = true) {
                     for (int i = 0; i <= 10; i++) {
                         if (i > 1) {
@@ -101,7 +101,7 @@ public class MecanumWheelTestControls extends LinearOpMode {
                     }
                 }
 
-
+*/
                 frontLeftMotor.setPower(((leftY_G1 + rightX_G1 - leftX_G1) / factor) * multiplier);
                 backLeftMotor.setPower(((leftY_G1 + rightX_G1 + leftX_G1) / factor) * multiplier);
                 backRightMotor.setPower(((leftY_G1 - rightX_G1 + leftX_G1) / factor) * multiplier);
