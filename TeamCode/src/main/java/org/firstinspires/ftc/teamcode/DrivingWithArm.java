@@ -53,10 +53,6 @@ public class DrivingWithArm extends LinearOpMode {
             double rightY_G1;
             double leftX_G1;
             double leftY_G1;
-            double leftX_G2;
-            double leftY_G2;
-            double rightX_G2;
-            double rightY_G2;
 
             rightY_G1 = -gamepad1.right_stick_y;
             rightX_G1 = -gamepad1.right_stick_x;
