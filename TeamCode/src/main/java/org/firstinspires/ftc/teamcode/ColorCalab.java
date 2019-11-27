@@ -59,7 +59,7 @@ public class ColorCalab extends LinearOpMode {
         sensorColor = hardwareMap.get(ColorSensor.class, "sensor_color_distance");
 
         // get a reference to the distance sensor that shares the same name.
-        sensorDistance = hardwareMap.get(DistanceSensor.class, "sensor_color_distance");
+        //sensorDistance = hardwareMap.get(DistanceSensor.class, "sensor_color_distance");
 
         // hsvValues is an array that will hold the hue, saturation, and value information.
         float hsvValues[] = {0F, 0F, 0F};
@@ -85,46 +85,21 @@ public class ColorCalab extends LinearOpMode {
         List<Integer> red = new ArrayList<>();
         List<Integer> green = new ArrayList<>();
         List<Integer> blue = new ArrayList<>();
+        double redsum = 0;
+        double bluesum = 0;
+        double greensum = 0;
 
-        while (opModeIsActive()) {
-            int breaker = 0;
-            breaker = breaker + 1;
-            if (breaker == 100) {
-                break;
-            }
-            // convert the RGB values to HSV values.
-            // multiply by the SCALE_FACTOR.
-            // then cast it back to int (SCALE_FACTOR is a double)
-            Color.RGBToHSV((int) (sensorColor.red() * SCALE_FACTOR),
-                    (int) (sensorColor.green() * SCALE_FACTOR),
-                    (int) (sensorColor.blue() * SCALE_FACTOR),
-                    hsvValues);
-
-            // send the info back to driver station using telemetry function.
-            telemetry.addData("Distance (cm)",
-                    String.format(Locale.US, "%.02f", sensorDistance.getDistance(DistanceUnit.CM)));
-            telemetry.addData("Alpha", sensorColor.alpha());
+        for(int i = 0; i < 100; i++) {
             telemetry.addData("Red  ", sensorColor.red());
             telemetry.addData("Green", sensorColor.green());
             telemetry.addData("Blue ", sensorColor.blue());
-            telemetry.addData("Hue", hsvValues[0]);
+            telemetry.update();
 
-            // change the background color to match the color detected by the RGB sensor.
-            // pass a reference to the hue, saturation, and value array as an argument
-            // to the HSVToColor method.
-            relativeLayout.post(new Runnable() {
-                public void run() {
-                    relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, values));
-                }
-            });
             red.add(sensorColor.red());
             green.add(sensorColor.green());
             blue.add(sensorColor.blue());
-            telemetry.update();
         }
-        int redsum = 0;
-        int greensum = 0;
-        int bluesum = 0;
+
         for (int i = 0; i < red.size(); i++) {
             redsum = redsum + red.get(i);
         }
@@ -134,19 +109,49 @@ public class ColorCalab extends LinearOpMode {
         for (int i = 0; i < blue.size(); i++) {
             bluesum = bluesum + blue.get(i);
         }
-        double redave = (double) redsum / red.size();
-        double blueave = (double) bluesum / blue.size();
-        double greenave = (double) greensum / green.size();
+        double redave = ((double) redsum) / ((double) red.size());
+        double blueave = ((double) bluesum) / ((double) blue.size());
+        double greenave = ((double) greensum) / ((double) green.size());
 
         telemetry.addData("Blue Average", blueave);
         telemetry.addData("Red Average", redave);
         telemetry.addData("Green Average", greenave);
+        telemetry.update();
 
-        // Set the panel back to the default color
-        relativeLayout.post(new Runnable() {
-            public void run() {
-                relativeLayout.setBackgroundColor(Color.WHITE);
+        while (opModeIsActive()) {
+                // convert the RGB values to HSV values.
+                // multiply by the SCALE_FACTOR.
+                // then cast it back to int (SCALE_FACTOR is a double)
+                //Color.RGBToHSV((int) (sensorColor.red() * SCALE_FACTOR),
+                 //       (int) (sensorColor.green() * SCALE_FACTOR),
+                  //      (int) (sensorColor.blue() * SCALE_FACTOR),
+                  //      hsvValues);
+
+                // send the info back to driver station using telemetry function.
+                //telemetry.addData("Distance (cm)",
+                //String.format(Locale.US, "%.02f", sensorDistance.getDistance(DistanceUnit.CM)));
+                //telemetry.addData("Alpha", sensorColor.alpha());
+                //telemetry.addData("Red  ", sensorColor.red());
+                //telemetry.addData("Green", sensorColor.green());
+                //telemetry.addData("Blue ", sensorColor.blue());
+                //telemetry.addData("Hue", hsvValues[0]);
+
+                // change the background color to match the color detected by the RGB sensor.
+                // pass a reference to the hue, saturation, and value array as an argument
+                // to the HSVToColor method.
+                //relativeLayout.post(new Runnable() {
+                 //   public void run() {
+                 //       relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, values));
+                 //   }
+                //});
+                //telemetry.update();
             }
-        });
+
+            // Set the panel back to the default color
+            relativeLayout.post(new Runnable() {
+                public void run() {
+                    relativeLayout.setBackgroundColor(Color.WHITE);
+                }
+            });
     }
 }
