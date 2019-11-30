@@ -2,7 +2,11 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+
+import java.util.Arrays;
 
 @TeleOp
 public class MechDrive extends LinearOpMode {
@@ -19,7 +23,8 @@ public class MechDrive extends LinearOpMode {
         frontLeftMotor = hardwareMap.get(DcMotor.class, "motor1");
         frontRightMotor = hardwareMap.get(DcMotor.class, "motor2");
         backRightMotor = hardwareMap.get(DcMotor.class, "motor3");
-
+        CRServo slideWind = hardwareMap.get(CRServo.class, "slide_wind");
+        DcMotor rackmotor = hardwareMap.get(DcMotor.class, "rackmotor");
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -33,6 +38,9 @@ public class MechDrive extends LinearOpMode {
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        boolean[] lastd = new boolean[4];
+        boolean[] nowd = new boolean[4];
+        Arrays.fill(lastd, false);
         while (opModeIsActive()) {
 
                 double rightX_G1;
@@ -53,17 +61,27 @@ public class MechDrive extends LinearOpMode {
                 rightY_G2 = gamepad2.right_stick_y;
                 rightX_G2 = gamepad2.right_stick_x;
 
-/*
-            rightX_G1 = gamepad1.right_stick_y;
-            rightY_G1 = -gamepad1.right_stick_x;
-            leftX_G1 = -gamepad1.left_stick_y;
-            leftY_G1 = -gamepad1.left_stick_x;
-            leftX_G2 = gamepad2.left_stick_y;
-            leftY_G2 = gamepad2.left_stick_x;
-            rightX_G2 = gamepad2.right_stick_y;
-            rightY_G2 = gamepad2.right_stick_x;
-*/
-            if (gamepad1.y) {
+
+                if(gamepad1.dpad_up ==true) {
+                    slideWind.setPower(1);
+                } else if(gamepad1.dpad_down == true) {
+                    slideWind.setPower(-1);
+                } else {
+                    slideWind.setPower(0);
+                }
+
+
+                if(gamepad1.dpad_left ==true) {
+                    rackmotor.setPower(1.0);
+                } else if(gamepad1.dpad_right == true) {
+                    rackmotor.setPower(-1.0);
+                } else {
+                    rackmotor.setPower(0);
+                }
+
+
+
+                if (gamepad1.y) {
                     factor = 1;
                 } else if (gamepad1.a) {
                     factor = 3;
