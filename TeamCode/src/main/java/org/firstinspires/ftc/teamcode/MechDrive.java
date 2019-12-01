@@ -25,7 +25,9 @@ public class MechDrive extends LinearOpMode {
         backRightMotor = hardwareMap.get(DcMotor.class, "motor3");
         CRServo slideWind = hardwareMap.get(CRServo.class, "slide_wind");
         DcMotor rackmotor = hardwareMap.get(DcMotor.class, "rackmotor");
+        Servo claw =hardwareMap.get(Servo.class, "claw");
         telemetry.addData("Status", "Initialized");
+
         telemetry.update();
 
         waitForStart();
@@ -38,9 +40,7 @@ public class MechDrive extends LinearOpMode {
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        boolean[] lastd = new boolean[4];
-        boolean[] nowd = new boolean[4];
-        Arrays.fill(lastd, false);
+        claw.setPosition(0.5);
         while (opModeIsActive()) {
 
                 double rightX_G1;
@@ -79,7 +79,12 @@ public class MechDrive extends LinearOpMode {
                     rackmotor.setPower(0);
                 }
 
-
+                //0.075
+                double clawPos = gamepad1.right_trigger;
+                if(clawPos < 0.075) {
+                    clawPos = 0.075;
+                }
+                claw.setPosition(clawPos);
 
                 if (gamepad1.y) {
                     factor = 1;
