@@ -58,6 +58,7 @@ public class RepresentoBotSupremeLeader {
     }
 
     public void turnRight(double degrees, double power) {
+        //
         gyro.resetWithDirection(Gyro.RIGHT);
 
         // start the motors turning right
