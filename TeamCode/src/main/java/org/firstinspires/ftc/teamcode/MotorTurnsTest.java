@@ -7,16 +7,27 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @TeleOp
 public class MotorTurnsTest extends LinearOpMode {
 
+    // 1 in : 30.26086956217 ticks
+
     private DcMotor backLeftMotor;
+    private DcMotor frontLeftMotor;
+    private DcMotor backRightMotor;
+    private DcMotor frontRightMotor;
 
     @Override
     public void runOpMode() {
 
         backLeftMotor = hardwareMap.get(DcMotor.class, "motor0");
+        frontLeftMotor = hardwareMap.get(DcMotor.class, "motor1");
+        frontRightMotor = hardwareMap.get(DcMotor.class, "motor2");
+        backRightMotor = hardwareMap.get(DcMotor.class, "motor3");
 
         waitForStart();
 
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // reset encoder count kept by left motor.
         backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -28,7 +39,10 @@ public class MotorTurnsTest extends LinearOpMode {
                 backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             }
 
-            backLeftMotor.setPower(gamepad1.left_stick_y);
+            backLeftMotor.setPower(-gamepad1.right_stick_y);
+            frontRightMotor.setPower(gamepad1.right_stick_y);
+            frontLeftMotor.setPower(-gamepad1.right_stick_y);
+            backRightMotor.setPower(gamepad1.right_stick_y);
             int ticks = backLeftMotor.getCurrentPosition();
 
             telemetry.addData("Ticks ", ticks);

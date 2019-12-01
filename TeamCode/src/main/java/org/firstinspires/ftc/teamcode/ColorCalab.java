@@ -109,14 +109,41 @@ public class ColorCalab extends LinearOpMode {
         for (int i = 0; i < v.size(); i++) {
             vsum = vsum + v.get(i);
         }
+
         float have = hsum / h.size();
         float save = ssum / s.size();
         float vave = vsum / v.size();
 
+        hsum = 0;
+        ssum = 0;
+        vsum = 0;
+
+        for (int i = 0; i < h.size(); i++) {
+            hsum = hsum + (float) Math.pow(h.get(i) - have, 2);
+        }
+        for (int i = 0; i < s.size(); i++) {
+            ssum = ssum + (float) Math.pow(s.get(i) - save, 2);
+        }
+        for (int i = 0; i < v.size(); i++) {
+            vsum = vsum + (float) Math.pow(v.get(i) - vave, 2);
+        }
+
+        float hsd = (float) Math.sqrt(hsum / h.size());
+        float ssd = (float) Math.sqrt(ssum / s.size());
+        float vsd = (float) Math.sqrt(vsum / v.size());
 
         telemetry.addData("H Average", have);
         telemetry.addData("S Average", save);
         telemetry.addData("V Average", vave);
+        telemetry.addData("H Standard Deviation", hsd);
+        telemetry.addData("S Standard Deviation", ssd);
+        telemetry.addData("V Standard Deviation", vsd);
+        telemetry.addData("H Standard Deviation Range Upper", have + 3 * hsd);
+        telemetry.addData("H Standard Deviation Range Lower", have - 3 * hsd);
+        telemetry.addData("S Standard Deviation Range Upper", save + 3 * ssd);
+        telemetry.addData("S Standard Deviation Range Lower", save - 3 * ssd);
+        telemetry.addData("V Standard Deviation Range Upper", vave + 3 * vsd);
+        telemetry.addData("V Standard Deviation Range Lower", vave - 3 * vsd);
         telemetry.update();
 
 

@@ -151,6 +151,8 @@ public class VuNavWithDriving extends LinearOpMode {
 
     @Override public void runOpMode() {
 
+        RepresentoBotSupremeLeader bot = new RepresentoBotSupremeLeader(this);
+
         backLeftMotor = hardwareMap.get(DcMotor.class, "motor0");
         frontLeftMotor = hardwareMap.get(DcMotor.class, "motor1");
         frontRightMotor = hardwareMap.get(DcMotor.class, "motor2");
@@ -365,6 +367,11 @@ public class VuNavWithDriving extends LinearOpMode {
 
         RepresentoBotSupremeLeader rob = new RepresentoBotSupremeLeader(this);
 
+        //todo: measure
+        float xrobot = 10;
+        float yrobot = -5;
+        float hrobot = 0;
+
         while (!isStopRequested()) {
 
             // check all the trackable targets to see which one (if any) is visible.
@@ -384,9 +391,6 @@ public class VuNavWithDriving extends LinearOpMode {
                 }
             }
 
-
-
-
             // Provide feedback as to where the robot is located (if we know).
             if (targetVisible) {
                 // express position (translation) of robot in inches.
@@ -401,6 +405,12 @@ public class VuNavWithDriving extends LinearOpMode {
                 float z = translation.get(2);
 
 
+                //todo: Ranges of Deviation
+                /*
+                H: 45.1 - 37.1
+                S: 0.651 - 0.500
+                V: 0.457 - 0.433
+                 */
 
                 // express the rotation of the robot in degrees.
                 Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
@@ -410,15 +420,29 @@ public class VuNavWithDriving extends LinearOpMode {
                 float pitch = rotation.secondAngle;
                 float heading = rotation.thirdAngle;
 
-                float distance = getDistance(xtarget, ytarget, x, y);
-                float rotate = this.getDirection(xtarget, ytarget, x, y, heading, distance);
+                xrobot = x;
+                yrobot = y;
+                hrobot = heading;
 
-            }
-            else {
+            } else {
                 telemetry.addData("Visible Target", "none");
+                // 1 in : 30.26086956217 ticks
+                // 1 in : 30.26 ticks
             }
             telemetry.update();
         }
+                float distance = getDistance(xtarget, ytarget, xrobot, yrobot);
+                float rotate = this.getDirection(xtarget, ytarget, xrobot, yrobot, hrobot, distance);
+
+                if (rotate > 0) {
+                    bot.turnLeft(-rotate, 0.25);
+                } else if (rotate < 0) {
+                    bot.turnRight(rotate, 0.25);
+                }
+                bot.goForward(0.5, distance);
+                //todo: DOES THIS WORK?
+
+
 
         frontLeftMotor.setPower(0);
         backLeftMotor.setPower(0);
