@@ -38,6 +38,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
+import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
@@ -49,14 +51,15 @@ import java.util.Locale;
 @TeleOp
 public class ColorCalab extends LinearOpMode {
 
-    ColorSensor sensorColor;
+    //ColorSensor sensorColor;
+    NormalizedColorSensor sensorColor;
     DistanceSensor sensorDistance;
 
     @Override
     public void runOpMode() {
 
         // get a reference to the color sensor.
-        sensorColor = hardwareMap.get(ColorSensor.class, "sensor_color_distance");
+        sensorColor = hardwareMap.get(NormalizedColorSensor.class, "sensor_color");
 
         // get a reference to the distance sensor that shares the same name.
         //sensorDistance = hardwareMap.get(DistanceSensor.class, "sensor_color_distance");
@@ -64,59 +67,59 @@ public class ColorCalab extends LinearOpMode {
         // hsvValues is an array that will hold the hue, saturation, and value information.
         float hsvValues[] = {0F, 0F, 0F};
 
-        // values is a reference to the hsvValues array.
-        final float values[] = hsvValues;
-
-        // sometimes it helps to multiply the raw RGB values with a scale factor
-        // to amplify/attentuate the measured values.
-        final double SCALE_FACTOR = 255;
-
-        // get a reference to the RelativeLayout so we can change the background
-        // color of the Robot Controller app to match the hue detected by the RGB sensor.
-        int relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
-        final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(relativeLayoutId);
-
         // wait for the start button to be pressed.
         waitForStart();
 
         // loop and read the RGB and distance data.
         // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
 
-        List<Integer> red = new ArrayList<>();
-        List<Integer> green = new ArrayList<>();
-        List<Integer> blue = new ArrayList<>();
-        double redsum = 0;
-        double bluesum = 0;
-        double greensum = 0;
+        List<Float> h = new ArrayList<>();
+        List<Float> s = new ArrayList<>();
+        List<Float> v = new ArrayList<>();
+        float hsum = 0;
+        float ssum = 0;
+        float vsum = 0;
 
-        for(int i = 0; i < 100; i++) {
-            telemetry.addData("Red  ", sensorColor.red());
-            telemetry.addData("Green", sensorColor.green());
-            telemetry.addData("Blue ", sensorColor.blue());
+        for(int i = 0; i < 2000; i++) {
+
+            NormalizedRGBA colors = sensorColor.getNormalizedColors();
+            float max = Math.max(Math.max(Math.max(colors.red, colors.green), colors.blue), colors.alpha);
+            colors.red   /= max;
+            colors.green /= max;
+            colors.blue  /= max;
+
+            Color.colorToHSV(colors.toColor(), hsvValues);
+
+            telemetry.addData("H  ", hsvValues[0]);
+            telemetry.addData("S", hsvValues[1]);
+            telemetry.addData("V ", hsvValues[2]);
             telemetry.update();
 
-            red.add(sensorColor.red());
-            green.add(sensorColor.green());
-            blue.add(sensorColor.blue());
+            h.add(hsvValues[0]);
+            s.add(hsvValues[1]);
+            v.add(hsvValues[2]);
         }
 
-        for (int i = 0; i < red.size(); i++) {
-            redsum = redsum + red.get(i);
+        for (int i = 0; i < h.size(); i++) {
+            hsum = hsum + h.get(i);
         }
-        for (int i = 0; i < green.size(); i++) {
-            greensum = greensum + green.get(i);
+        for (int i = 0; i < s.size(); i++) {
+            ssum = ssum + s.get(i);
         }
-        for (int i = 0; i < blue.size(); i++) {
-            bluesum = bluesum + blue.get(i);
+        for (int i = 0; i < v.size(); i++) {
+            vsum = vsum + v.get(i);
         }
-        double redave = ((double) redsum) / ((double) red.size());
-        double blueave = ((double) bluesum) / ((double) blue.size());
-        double greenave = ((double) greensum) / ((double) green.size());
+        float have = hsum / h.size();
+        float save = ssum / s.size();
+        float vave = vsum / v.size();
 
-        telemetry.addData("Blue Average", blueave);
-        telemetry.addData("Red Average", redave);
-        telemetry.addData("Green Average", greenave);
+
+        telemetry.addData("H Average", have);
+        telemetry.addData("S Average", save);
+        telemetry.addData("V Average", vave);
         telemetry.update();
+
+
 
         while (opModeIsActive()) {
                 // convert the RGB values to HSV values.
@@ -148,10 +151,10 @@ public class ColorCalab extends LinearOpMode {
             }
 
             // Set the panel back to the default color
-            relativeLayout.post(new Runnable() {
-                public void run() {
-                    relativeLayout.setBackgroundColor(Color.WHITE);
-                }
-            });
+            //relativeLayout.post(new Runnable() {
+            //    public void run() {
+            //        relativeLayout.setBackgroundColor(Color.WHITE);
+            //    }
+            //});
     }
 }
