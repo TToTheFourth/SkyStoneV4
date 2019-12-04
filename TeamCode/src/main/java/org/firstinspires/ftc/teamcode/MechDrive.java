@@ -57,37 +57,33 @@ public class MechDrive extends LinearOpMode {
                 rightX_G1 = -gamepad1.right_stick_x;
                 leftY_G1 = gamepad1.left_stick_y;
                 leftX_G1 = -gamepad1.left_stick_x;
-                leftY_G2 = gamepad2.left_stick_y;
-                leftX_G2 = gamepad2.left_stick_x;
-                rightY_G2 = gamepad2.right_stick_y;
-                rightX_G2 = gamepad2.right_stick_x;
 
 
-                if(gamepad1.dpad_up ==true) {
+                if(gamepad2.dpad_up ==true) {
                     slideWind.setPower(1);
-                } else if(gamepad1.dpad_down == true) {
+                } else if(gamepad2.dpad_down == true) {
                     slideWind.setPower(-1);
                 } else {
                     slideWind.setPower(0);
                 }
 
 
-                if(gamepad1.dpad_left ==true) {
+                if(gamepad2.dpad_left ==true) {
                     rackmotor.setPower(1.0);
-                } else if(gamepad1.dpad_right == true) {
+                } else if(gamepad2.dpad_right == true) {
                     rackmotor.setPower(-1.0);
                 } else {
                     rackmotor.setPower(0);
                 }
 
                 //0.075
-                double clawPos = gamepad1.right_trigger;
+                double clawPos = gamepad2.right_trigger;
                 if(clawPos < 0.075) {
                     clawPos = 0.075;
                 }
                 claw.setPosition(clawPos);
 
-                if (gamepad1.right_bumper == true) {
+                if (gamepad2.right_bumper == true) {
                     right.setPosition(1.0);
                     left.setPosition(1.0);
                 }

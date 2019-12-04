@@ -19,6 +19,8 @@ public class RepresentoBotSupremeLeader {
     private DcMotor trackMotorF;
     private Servo foundationServo;
     private Servo stoneServo;
+    private Servo left;
+    private Servo right;
     private Gyro gyro;
     private LinearOpMode opMode;
     ModernRoboticsI2cRangeSensor rangeSensor;
@@ -40,6 +42,8 @@ public class RepresentoBotSupremeLeader {
         //foundationServo = opMode.hardwareMap.get(Servo.class, "foundServo");
         BNO055IMU imu = opMode.hardwareMap.get(BNO055IMU.class, "imu");
         gyro = new Gyro(imu, opMode);
+        left = opMode.hardwareMap.get(Servo.class, "left");
+        right = opMode.hardwareMap.get(Servo.class, "right");
         myTimer = new Timer();
         //stoneServo = opMode.hardwareMap.get(Servo.class, "stoneServo");
 
@@ -113,6 +117,15 @@ public class RepresentoBotSupremeLeader {
         frontRightMotor.setPower(0.0);
 
     }
+    public void servoLatch() {
+        right.setPosition(1.0);
+        left.setPosition(1.0);
+    }
+
+    public void ServoUnlatch() {
+        right.setPosition(0);
+        left.setPosition(0);
+    }
 
     double factor = 1.0;
     public void goForward(double power, double distance){
@@ -127,11 +140,12 @@ public class RepresentoBotSupremeLeader {
         backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
         frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
 
-        myTimer.setCompareTime(inchesToTime(distance, power));
-        myTimer.start();
+        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        long ticks = ticksToInches(distance);
         while (opMode.opModeIsActive()) {
-            // TODO: need brackets for the if and a break statement
-            if (myTimer.timeChecker()) {
+            if (backLeftMotor.getCurrentPosition() >= ticks) {
                 break;
             }
         }
@@ -141,8 +155,7 @@ public class RepresentoBotSupremeLeader {
         backRightMotor.setPower(0.0);
         frontRightMotor.setPower(0.0);
     }
-
-    public long inchesToTime(double inches, double power) {
-        return (long) (0.0384 * inches * 500.0 / power);
+    public long ticksToInches(double inches) {
+        return (long) (inches * 30.26086956217);
     }
 }

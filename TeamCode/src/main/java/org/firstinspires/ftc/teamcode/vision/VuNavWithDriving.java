@@ -371,6 +371,10 @@ public class VuNavWithDriving extends LinearOpMode {
         float xrobot = 10;
         float yrobot = -5;
         float hrobot = 0;
+/*      if (distance > 101.82) {
+            check
+        }
+ */
 
         while (!isStopRequested()) {
 
