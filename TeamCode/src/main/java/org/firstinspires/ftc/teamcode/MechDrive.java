@@ -27,7 +27,8 @@ public class MechDrive extends LinearOpMode {
         DcMotor rackmotor = hardwareMap.get(DcMotor.class, "rackmotor");
         Servo claw =hardwareMap.get(Servo.class, "claw");
         telemetry.addData("Status", "Initialized");
-
+        Servo left =hardwareMap.get(Servo.class, "left");
+        Servo right =hardwareMap.get(Servo.class, "right");
         telemetry.update();
 
         waitForStart();
@@ -85,6 +86,15 @@ public class MechDrive extends LinearOpMode {
                     clawPos = 0.075;
                 }
                 claw.setPosition(clawPos);
+
+                if (gamepad1.right_bumper == true) {
+                    right.setPosition(1.0);
+                    left.setPosition(1.0);
+                }
+                else {
+                    right.setPosition(0);
+                    left.setPosition(0);
+                }
 
                 if (gamepad1.y) {
                     factor = 1;
