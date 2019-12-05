@@ -222,7 +222,14 @@ public class RepresentoBotSupremeLeader {
 
         long ticks = ticksToInches(distance);
         while (opMode.opModeIsActive()) {
-            if (backLeftMotor.getCurrentPosition() >= ticks) {
+            int pos = backLeftMotor.getCurrentPosition();
+            if(pos < 0) {
+                pos = pos * -1;
+            }
+            opMode.telemetry.addData("Pos ", pos);
+            opMode.telemetry.update();
+
+            if (pos >= ticks) {
                 break;
             }
         }
@@ -232,6 +239,7 @@ public class RepresentoBotSupremeLeader {
         backRightMotor.setPower(0.0);
         frontRightMotor.setPower(0.0);
     }
+
     public long ticksToInches(double inches) {
         return (long) (inches * 30.26086956217);
     }
