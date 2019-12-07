@@ -243,7 +243,11 @@ public class RepresentoBotSupremeLeader {
 
         long ticks = ticksToInchesForward(distance);
         while (opMode.opModeIsActive()) {
-            if (backLeftMotor.getCurrentPosition() >= ticks) {
+            int rotations = backLeftMotor.getCurrentPosition();
+            if (rotations<0) {
+                rotations = rotations * -1;
+            }
+            if (rotations >= ticks) {
                 break;
             }
         }
