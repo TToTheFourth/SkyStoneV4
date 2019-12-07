@@ -17,12 +17,10 @@ public class FoundationDrag extends LinearOpMode {
         waitForStart();
 
         bot.startGyro();
-        bot.goForward(-0.75, 30);
+        bot.goForward(-0.5, 30);
         bot.servoLatch();
-        bot.goForward(0.75, 30);
+        bot.goForward(0.5, 30);
         bot.ServoUnlatch();
-        bot.turnRight(90, 0.5);
-        bot.goForward(0.75, 34);
-        //add slide motors instead of turn, go forward
+        bot.slide(0.75, 34);
     }
 }

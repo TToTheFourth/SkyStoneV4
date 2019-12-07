@@ -164,6 +164,27 @@ public class RepresentoBotSupremeLeader {
         frontRightMotor.setPower(0.0);
     }
 
+    public void slide (double power, double distance) {
+        double rightY_G1 = 0.0;
+        double rightX_G1 = 0.0;
+        double leftX_G1 = 1.0 * power;
+
+        frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
+        backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
+        backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
+        frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
+
+        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        long ticks = ticksToInchesSlide(distance);
+        while (opMode.opModeIsActive()) {
+            if (backLeftMotor.getCurrentPosition() >= ticks) {
+                break;
+            }
+        }
+    }
+
     public void slideWhile(double power) {
         double rightY_G1 = 0.0;
         double rightX_G1 = 0.0;
@@ -220,7 +241,7 @@ public class RepresentoBotSupremeLeader {
         backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        long ticks = ticksToInches(distance);
+        long ticks = ticksToInchesForward(distance);
         while (opMode.opModeIsActive()) {
             if (backLeftMotor.getCurrentPosition() >= ticks) {
                 break;
@@ -232,7 +253,10 @@ public class RepresentoBotSupremeLeader {
         backRightMotor.setPower(0.0);
         frontRightMotor.setPower(0.0);
     }
-    public long ticksToInches(double inches) {
+    public long ticksToInchesForward(double inches) {
         return (long) (inches * 30.26086956217);
+    }
+    public long ticksToInchesSlide(double inches) {
+        return (long) (inches * 31.930232558139);
     }
 }
