@@ -99,6 +99,25 @@ public class MechDrive extends LinearOpMode {
                     left.setPosition(0);
                 }
 
+            boolean power = false;
+            boolean steady = false;
+            double nPower = 0;
+
+            nPower = (rightX_G1 + rightX_G1 + leftX_G1) / 3;
+
+            if (nPower > 0) {
+                power = true;
+            }
+
+            if (power == true && steady == false && multiplier < 1) {
+                multiplier = multiplier + 0.1;
+            } else if (power = false) {
+                multiplier = 0;
+                steady = false;
+            } else if (multiplier >= 1) {
+                steady = true;
+            }
+
                 if (gamepad1.y) {
                     factor = 1;
                 } else if (gamepad1.a) {
