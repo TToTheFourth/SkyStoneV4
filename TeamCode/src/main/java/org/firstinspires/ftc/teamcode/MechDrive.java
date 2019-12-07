@@ -42,9 +42,14 @@ public class MechDrive extends LinearOpMode {
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         claw.setPosition(0.5);
+        slideWind.getController().setServoPosition(0, 0);
         while (opModeIsActive()) {
 
-                double rightX_G1;
+            telemetry.addData(" winch ",slideWind.getController().getServoPosition(0) );
+            telemetry.update();
+
+
+            double rightX_G1;
                 double rightY_G1;
                 double leftX_G1;
                 double leftY_G1;
@@ -57,7 +62,6 @@ public class MechDrive extends LinearOpMode {
                 rightX_G1 = -gamepad1.right_stick_x;
                 leftY_G1 = gamepad1.left_stick_y;
                 leftX_G1 = -gamepad1.left_stick_x;
-
 
                 if(gamepad2.dpad_up ==true) {
                     slideWind.setPower(1);
@@ -78,14 +82,17 @@ public class MechDrive extends LinearOpMode {
 
                 //0.075
                 double clawPos = gamepad2.right_trigger;
-                if(clawPos < 0.075) {
-                    clawPos = 0.075;
+                if(clawPos < 0.17) {
+                    clawPos = 0.17;
+                }
+                if (clawPos > 0.65 ) {
+                    clawPos = 0.65;
                 }
                 claw.setPosition(clawPos);
 
                 if (gamepad2.right_bumper == true) {
-                    right.setPosition(1.0);
-                    left.setPosition(1.0);
+                    right.setPosition(0.47);
+                    left.setPosition(0.47);
                 }
                 else {
                     right.setPosition(0);
