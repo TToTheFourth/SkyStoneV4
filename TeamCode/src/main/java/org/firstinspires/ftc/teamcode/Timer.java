@@ -13,5 +13,12 @@ public class Timer {
     public void setCompareTime(long time) {
         compareTime = time;
     }
+    public void waitT (long milli) {
+        long time = System.currentTimeMillis();
+        long target = time + milli;
+        while (System.currentTimeMillis() < target) {
+
+        }
+    }
 
 }

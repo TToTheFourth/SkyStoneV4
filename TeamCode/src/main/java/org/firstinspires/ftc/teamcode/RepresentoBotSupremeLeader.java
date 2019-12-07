@@ -25,6 +25,9 @@ public class RepresentoBotSupremeLeader {
     private DcMotor frontLeftMotor;
     private DcMotor frontRightMotor;
     private DcMotor backRightMotor;
+    private DcMotor rackMotor;
+    private Servo claw;
+    private Servo servoCon;
 
     private DcMotor slideMotorF;
     private DcMotor trackMotorF;
@@ -51,6 +54,9 @@ public class RepresentoBotSupremeLeader {
         frontLeftMotor = opMode.hardwareMap.get(DcMotor.class, "motor1");
         frontRightMotor = opMode.hardwareMap.get(DcMotor.class, "motor2");
         backRightMotor = opMode.hardwareMap.get(DcMotor.class, "motor3");//slideMotorF = opMode.hardwareMap.get(DcMotor.class, "motor4");
+        rackMotor = opMode.hardwareMap.get(DcMotor.class, "rackmotor");
+        servoCon = opMode.hardwareMap.get(Servo.class, "servoCon");
+        claw = opMode.hardwareMap.get(Servo.class, "claw");
         //trackMotorF = opMode.hardwareMap.get(DcMotor.class, "motor5");
         //foundationServo = opMode.hardwareMap.get(Servo.class, "foundServo");
         BNO055IMU imu = opMode.hardwareMap.get(BNO055IMU.class, "imu");
@@ -67,6 +73,7 @@ public class RepresentoBotSupremeLeader {
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rackMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //slideMotorF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //trackMotorF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
@@ -179,7 +186,11 @@ public class RepresentoBotSupremeLeader {
 
         long ticks = ticksToInchesSlide(distance);
         while (opMode.opModeIsActive()) {
-            if (backLeftMotor.getCurrentPosition() >= ticks) {
+            int rotations = backLeftMotor.getCurrentPosition();
+            if (rotations<0) {
+                rotations = rotations * -1;
+            }
+            if (rotations >= ticks) {
                 break;
             }
         }
@@ -201,7 +212,7 @@ public class RepresentoBotSupremeLeader {
             float h = hsvValues[0];
             float s = hsvValues[1];
             float v = hsvValues[2];
-            if (!(37.1 < h && 45.1 > h && 0.5 < s && 0.651 > s && 0.433 < v && 0.457 > v)) {
+            if (!(35.1 < h && 47.1 > h && 0.4 < s && 0.751 > s && 0.333 < v && 0.557 > v)) {
                 break;
             }
             /*
@@ -225,6 +236,22 @@ public class RepresentoBotSupremeLeader {
         colors.blue  /= max;
 
         Color.colorToHSV(colors.toColor(), hsvValues);
+    }
+
+    public void timeRack(long time) {
+        myTimer.setCompareTime(time * 1000);
+        rackMotor.setPower(1);
+        myTimer.start();
+        while (opMode.opModeIsActive()) {
+            if (myTimer.timeChecker()) {
+                break;
+            }
+        }
+        rackMotor.setPower(0);
+    }
+
+    public void moveClaw(double position) {
+        servoCon.setPosition(position);
     }
 
     double factor = 1.0;
@@ -262,5 +289,8 @@ public class RepresentoBotSupremeLeader {
     }
     public long ticksToInchesSlide(double inches) {
         return (long) (inches * 31.930232558139);
+    }
+    public long inchesToTime(double inches, double power) {
+        return (long) (0.0384 * inches * 500.0 / power);
     }
 }

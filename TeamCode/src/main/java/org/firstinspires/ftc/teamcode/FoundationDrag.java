@@ -8,7 +8,7 @@ public class FoundationDrag extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-
+        Timer timer = new Timer();
         RepresentoBotSupremeLeader bot = new RepresentoBotSupremeLeader(this);
 
         telemetry.addData("Status", "Initialized");
@@ -17,10 +17,17 @@ public class FoundationDrag extends LinearOpMode {
         waitForStart();
 
         bot.startGyro();
+        bot.goForward(-0.5, 1);
+        bot.slide(0.5, 4);
         bot.goForward(-0.5, 30);
         bot.servoLatch();
-        bot.goForward(0.5, 30);
+        timer.waitT(1000);
+        bot.goForward(0.5, 31);
+        bot.slide(0.5, 4.5);
+        bot.goForward(0.5, 4.5);
+        timer.waitT(1000);
         bot.ServoUnlatch();
-        bot.slide(0.75, 34);
+        timer.waitT(1000);
+        bot.slide(-0.75, 60);
     }
 }
