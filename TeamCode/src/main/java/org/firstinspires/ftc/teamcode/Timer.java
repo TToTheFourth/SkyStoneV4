@@ -13,5 +13,4 @@ public class Timer {
     public void setCompareTime(long time) {
         compareTime = time;
     }
-
 }
