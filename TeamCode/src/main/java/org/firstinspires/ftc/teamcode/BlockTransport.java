@@ -17,7 +17,7 @@ public class BlockTransport extends LinearOpMode {
         waitForStart();
 
         bot.startGyro();
-        bot.forwardUntil(1, 0.5);
-        bot.slideWhile(0.25);
+        bot.forwardUntil(2, 0.2);
+        bot.slideWhile(0.2);
     }
 }
