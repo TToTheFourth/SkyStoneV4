@@ -76,61 +76,79 @@ public class ColorCalab extends LinearOpMode {
         List<Float> h = new ArrayList<>();
         List<Float> s = new ArrayList<>();
         List<Float> v = new ArrayList<>();
+        // makes lists for h, s, and v to contain the numbers
         float hsum = 0;
+        // the sum of all h values
         float ssum = 0;
+        // the sum of all s values
         float vsum = 0;
+        // the sum of all v values
 
         for(int i = 0; i < 2000; i++) {
 
             NormalizedRGBA colors = sensorColor.getNormalizedColors();
+            // normalizes the colors so none of the colors have readings that are off the mark
+            // ( a jump of 50 to 1059 )
             float max = Math.max(Math.max(Math.max(colors.red, colors.green), colors.blue), colors.alpha);
             colors.red   /= max;
             colors.green /= max;
             colors.blue  /= max;
 
             Color.colorToHSV(colors.toColor(), hsvValues);
+            // changes rbg to hsv
 
             telemetry.addData("H  ", hsvValues[0]);
             telemetry.addData("S", hsvValues[1]);
             telemetry.addData("V ", hsvValues[2]);
             telemetry.update();
+            // let's u see the hsv values on the screen
 
             h.add(hsvValues[0]);
             s.add(hsvValues[1]);
             v.add(hsvValues[2]);
+            // applying the hsv values to their lists
         }
 
         for (int i = 0; i < h.size(); i++) {
             hsum = hsum + h.get(i);
+            // adds all the h values together
         }
         for (int i = 0; i < s.size(); i++) {
             ssum = ssum + s.get(i);
+            // adds all the s values together
         }
         for (int i = 0; i < v.size(); i++) {
             vsum = vsum + v.get(i);
+            // adds all the v values together
         }
 
         float have = hsum / h.size();
         float save = ssum / s.size();
         float vave = vsum / v.size();
+        // averages the hsv values
 
         hsum = 0;
         ssum = 0;
         vsum = 0;
+        // resets the sums
 
         for (int i = 0; i < h.size(); i++) {
             hsum = hsum + (float) Math.pow(h.get(i) - have, 2);
+            // getting the standard deviation of h
         }
         for (int i = 0; i < s.size(); i++) {
             ssum = ssum + (float) Math.pow(s.get(i) - save, 2);
+            // getting the standard deviation of s
         }
         for (int i = 0; i < v.size(); i++) {
             vsum = vsum + (float) Math.pow(v.get(i) - vave, 2);
+            // getting the standard deviation of v
         }
 
         float hsd = (float) Math.sqrt(hsum / h.size());
         float ssd = (float) Math.sqrt(ssum / s.size());
         float vsd = (float) Math.sqrt(vsum / v.size());
+        // averaging the hsv values
 
         telemetry.addData("H Average", have);
         telemetry.addData("S Average", save);
@@ -145,7 +163,7 @@ public class ColorCalab extends LinearOpMode {
         telemetry.addData("V Standard Deviation Range Upper", vave + 3 * vsd);
         telemetry.addData("V Standard Deviation Range Lower", vave - 3 * vsd);
         telemetry.update();
-
+        // todo: pick up here for commenting code
 
 
         while (opModeIsActive()) {
