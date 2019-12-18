@@ -46,6 +46,7 @@ public class DrivingWithArm extends LinearOpMode {
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         trackMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        // makes sure the robot doesn't drift
 
         while (opModeIsActive()) {
 
@@ -60,6 +61,7 @@ public class DrivingWithArm extends LinearOpMode {
             leftX_G1 = -gamepad1.left_stick_x;
             tgtPowerSS = gamepad2.left_stick_y;
             tgtPowerTM = gamepad2.right_stick_y;
+            // sets the power to a controller
 
 
             if (gamepad1.y) {
@@ -69,6 +71,7 @@ public class DrivingWithArm extends LinearOpMode {
             } else if (gamepad1.x) {
                 factor = 2;
             }
+            // allows the speed tyo change
 
             boolean power = false;
             boolean steady = false;
@@ -88,6 +91,7 @@ public class DrivingWithArm extends LinearOpMode {
             } else if (multiplier >= 1) {
                 steady = true;
             }
+            // makes the robot gradually increase speed
 
             frontLeftMotor.setPower(((rightX_G1 + rightY_G1 - leftX_G1) / factor) * multiplier);
             backLeftMotor.setPower(((rightX_G1 + rightY_G1 + leftX_G1) / factor) * multiplier);
@@ -95,6 +99,7 @@ public class DrivingWithArm extends LinearOpMode {
             frontRightMotor.setPower(((rightX_G1 - rightY_G1 - leftX_G1) / factor) * multiplier);
             trackMotor.setPower(tgtPowerTM);
             stringServo.setPosition(tgtPowerSS);
+            // makes the correct motor / servo connect to the correct power variable(s)
 
         }
 
@@ -102,5 +107,6 @@ public class DrivingWithArm extends LinearOpMode {
         backLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
         backRightMotor.setPower(0);
+        // ends motor movement
     }
 }

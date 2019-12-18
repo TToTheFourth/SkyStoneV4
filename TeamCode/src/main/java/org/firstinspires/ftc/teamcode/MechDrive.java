@@ -40,6 +40,7 @@ public class MechDrive extends LinearOpMode {
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        // makes sure the robot doesn't drift
 
         claw.setPosition(0.5);
         slideWind.getController().setServoPosition(0, 0);
@@ -70,6 +71,7 @@ public class MechDrive extends LinearOpMode {
                 } else {
                     slideWind.setPower(0);
                 }
+                // controls the servo that winds the string to move the linear slide
 
 
                 if(gamepad2.dpad_left ==true) {
@@ -79,6 +81,7 @@ public class MechDrive extends LinearOpMode {
                 } else {
                     rackmotor.setPower(0);
                 }
+                // moves the motor that moves the rack and pinion/ track
 
                 //0.075
                 double clawPos = gamepad2.right_trigger;
@@ -89,6 +92,7 @@ public class MechDrive extends LinearOpMode {
                     clawPos = 0.65;
                 }
                 claw.setPosition(clawPos);
+                // releases the claw
 
                 if (gamepad2.right_bumper == true) {
                     right.setPosition(0.47);
@@ -117,6 +121,7 @@ public class MechDrive extends LinearOpMode {
             } else if (multiplier >= 1) {
                 steady = true;
             }
+            // gradually increases speed
 
                 if (gamepad1.y) {
                     factor = 1;
@@ -125,11 +130,13 @@ public class MechDrive extends LinearOpMode {
                 } else if (gamepad1.x) {
                     factor = 2;
                 }
+                // makes speed changes easy
 
                 frontLeftMotor.setPower(((rightX_G1 + rightY_G1 - leftX_G1) / factor) * multiplier);
                 backLeftMotor.setPower(((rightX_G1 + rightY_G1 + leftX_G1) / factor) * multiplier);
                 backRightMotor.setPower(((rightX_G1 - rightY_G1 + leftX_G1) / factor) * multiplier);
                 frontRightMotor.setPower(((rightX_G1 - rightY_G1 - leftX_G1) / factor) * multiplier);
+                // sets each motor to correct variables
 
         }
 
@@ -137,5 +144,6 @@ public class MechDrive extends LinearOpMode {
         backLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
         backRightMotor.setPower(0);
+        // turns off motors
     }
 }

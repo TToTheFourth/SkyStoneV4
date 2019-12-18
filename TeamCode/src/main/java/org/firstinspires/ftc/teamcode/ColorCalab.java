@@ -163,7 +163,7 @@ public class ColorCalab extends LinearOpMode {
         telemetry.addData("V Standard Deviation Range Upper", vave + 3 * vsd);
         telemetry.addData("V Standard Deviation Range Lower", vave - 3 * vsd);
         telemetry.update();
-        // todo: pick up here for commenting code
+        // for testing we added the different hsv values to telemetry so we knew what numbers to use
 
 
         while (opModeIsActive()) {

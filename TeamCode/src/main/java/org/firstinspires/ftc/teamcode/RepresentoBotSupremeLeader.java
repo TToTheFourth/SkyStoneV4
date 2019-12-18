@@ -86,6 +86,7 @@ public class RepresentoBotSupremeLeader {
     public void turnRight(double degrees, double power) {
         //
         gyro.resetWithDirection(Gyro.RIGHT);
+        // tells the gyro we are turning right
 
         // start the motors turning right
         double rightY_G1 = 0.0;
@@ -96,6 +97,7 @@ public class RepresentoBotSupremeLeader {
         backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
         backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
         frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
+        // connects the motors to the correct variables
 
         // loop until the robot turns :) degrees
         double d = -1 * degrees;
@@ -104,16 +106,18 @@ public class RepresentoBotSupremeLeader {
                 break;
             }
         }
+        // gets angle turn
 
         frontLeftMotor.setPower(0.0);
         backLeftMotor.setPower(0.0);
         backRightMotor.setPower(0.0);
         frontRightMotor.setPower(0.0);
-
+        // stops the motors
     }
 
     public void turnLeft(double degrees, double power) {
         gyro.resetWithDirection(Gyro.LEFT);
+        // tells gyro we are going left
 
         // start the motors turning left
         double rightY_G1 = 0.0;
@@ -124,6 +128,7 @@ public class RepresentoBotSupremeLeader {
         backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
         backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
         frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
+        // sets the motors to the correct variables
 
         // loop until the robot turns :) degrees
         double d = degrees;
@@ -132,57 +137,67 @@ public class RepresentoBotSupremeLeader {
                 break;
             }
         }
+        // gets degrees
 
         frontLeftMotor.setPower(0.0);
         backLeftMotor.setPower(0.0);
         backRightMotor.setPower(0.0);
         frontRightMotor.setPower(0.0);
-
+        // stops motors
     }
     public void servoLatch() {
         right.setPosition(1.0);
         left.setPosition(1.0);
+        // latches both servos, moving them to the down position
     }
 
     public void ServoUnlatch() {
         right.setPosition(0);
         left.setPosition(0);
+        // unlatches both servos, moving them to the up position
     }
 
     public void forwardUntil(double until, double power) {
         double rightY_G1 = 1.0 * power;
         double rightX_G1 = 0.0;
         double leftX_G1 = 0.0;
+        // sets power
 
         frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
         backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
         backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
         frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
+        // connects motors to the correct variable(s)
 
         while (opMode.opModeIsActive()) {
             if (sensorDistance.getDistance(DistanceUnit.INCH) < until) {
                 break;
             }
         }
+        // sets the distance sensor to go until we are inches away from something
 
         frontLeftMotor.setPower(0.0);
         backLeftMotor.setPower(0.0);
         backRightMotor.setPower(0.0);
         frontRightMotor.setPower(0.0);
+        // stops motor
     }
 
     public void slide (double power, double distance) {
         double rightY_G1 = 0.0;
         double rightX_G1 = 0.0;
         double leftX_G1 = 1.0 * power;
+        // sets power
 
         frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
         backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
         backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
         frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
+        // connects power to the correct variables
 
         backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        // sets encoder
 
         long ticks = ticksToInchesSlide(distance);
         while (opMode.opModeIsActive()) {
@@ -194,17 +209,20 @@ public class RepresentoBotSupremeLeader {
                 break;
             }
         }
+        // sets the inches to ticks so the motors understand
     }
 
     public void slideWhile(double power) {
         double rightY_G1 = 0.0;
         double rightX_G1 = 0.0;
         double leftX_G1 = 1.0 * power;
+        // sets power
 
         frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
         backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
         backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
         frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
+        // sets variables to the correct variables
 
         float hsvValues[] = {0, 0, 0};
         while (opMode.opModeIsActive()) {
@@ -215,6 +233,7 @@ public class RepresentoBotSupremeLeader {
             if (!(35.1 < h && 47.1 > h && 0.4 < s && 0.751 > s && 0.333 < v && 0.557 > v)) {
                 break;
             }
+            // tells the sensor what the hsv values need to be before it needs to stop
             /*
             H: 45.1 - 37.1
             S: 0.651 - 0.500
@@ -226,6 +245,7 @@ public class RepresentoBotSupremeLeader {
         backLeftMotor.setPower(0.0);
         backRightMotor.setPower(0.0);
         frontRightMotor.setPower(0.0);
+        // stops the motors
     }
 
     public void getColor(float [] hsvValues) {
@@ -234,8 +254,10 @@ public class RepresentoBotSupremeLeader {
         colors.red   /= max;
         colors.green /= max;
         colors.blue  /= max;
+        // normalizes colors
 
         Color.colorToHSV(colors.toColor(), hsvValues);
+        // tells the colors now that they are normalized
     }
 
     public void timeRack(long time) {
@@ -248,10 +270,12 @@ public class RepresentoBotSupremeLeader {
             }
         }
         rackMotor.setPower(0);
+        // moves the rack for a certain amount of time
     }
 
     public void moveClaw(double position) {
         servoCon.setPosition(position);
+        // sets claw to a position
     }
 
     double factor = 1.0;
@@ -259,14 +283,17 @@ public class RepresentoBotSupremeLeader {
         double rightY_G1 = 1.0 * power;
         double rightX_G1 = 0.0;
         double leftX_G1 = 0.0;
+        // sets power
 
         frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
         backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
         backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
         frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
+        // sets the correct variables to the motors
 
         backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        // sets the encoders
 
         long ticks = ticksToInchesForward(distance);
         while (opMode.opModeIsActive()) {
@@ -277,20 +304,25 @@ public class RepresentoBotSupremeLeader {
             if (rotations >= ticks) {
                 break;
             }
+            // makes inches transfer to ticks
         }
 
         frontLeftMotor.setPower(0.0);
         backLeftMotor.setPower(0.0);
         backRightMotor.setPower(0.0);
         frontRightMotor.setPower(0.0);
+        // sets motors to zero
     }
     public long ticksToInchesForward(double inches) {
         return (long) (inches * 30.26086956217);
+        // ticks forward formula
     }
     public long ticksToInchesSlide(double inches) {
         return (long) (inches * 31.930232558139);
+        // tick to slide inches formula
     }
     public long inchesToTime(double inches, double power) {
         return (long) (0.0384 * inches * 500.0 / power);
+        // inches to time formula
     }
 }
