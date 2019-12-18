@@ -15,6 +15,7 @@ public class MechDrive extends LinearOpMode {
     private DcMotor frontLeftMotor;
     private DcMotor backRightMotor;
     private DcMotor frontRightMotor;
+    private Servo servoCon;
 
     @Override
     public void runOpMode() {
@@ -25,6 +26,7 @@ public class MechDrive extends LinearOpMode {
         backRightMotor = hardwareMap.get(DcMotor.class, "motor3");
         CRServo slideWind = hardwareMap.get(CRServo.class, "slide_wind");
         DcMotor rackmotor = hardwareMap.get(DcMotor.class, "rackmotor");
+        servoCon = hardwareMap.get(Servo.class, "servoCon");
         Servo claw =hardwareMap.get(Servo.class, "claw");
         telemetry.addData("Status", "Initialized");
         Servo left =hardwareMap.get(Servo.class, "left");
@@ -93,6 +95,15 @@ public class MechDrive extends LinearOpMode {
                 }
                 claw.setPosition(clawPos);
                 // releases the claw
+
+                double conPos = gamepad2.left_trigger;
+                if(conPos <= 0) {
+                    conPos = 1;
+                }
+                if (conPos >= .9 ) {
+                    conPos = 0;
+                }
+                claw.setPosition(clawPos);
 
                 if (gamepad2.right_bumper == true) {
                     right.setPosition(0.47);
