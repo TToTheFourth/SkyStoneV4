@@ -103,7 +103,8 @@ public class MechDrive extends LinearOpMode {
                 if (conPos >= .9 ) {
                     conPos = 0;
                 }
-                claw.setPosition(clawPos);
+                servoCon.setPosition(conPos);
+                // moves our contingency servo
 
                 if (gamepad2.right_bumper == true) {
                     right.setPosition(0.47);
