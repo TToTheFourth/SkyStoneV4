@@ -28,6 +28,7 @@ public class VuHolder {
     float robotx;
     float roboty;
     float roboth;
+    VuforiaTrackables targetsSkyStone = this.vuforia.loadTrackablesFromAsset("Skystone");
 
     // IMPORTANT:  For Phone Camera, set 1) the camera source and 2) the orientation, based on how your phone is mounted:
     // 1) Camera Source.  Valid choices are:  BACK (behind screen) or FRONT (selfie side)
@@ -96,7 +97,7 @@ public class VuHolder {
 
         // Load the data sets for the trackable objects. These particular data
         // sets are stored in the 'assets' part of our application.
-        VuforiaTrackables targetsSkyStone = this.vuforia.loadTrackablesFromAsset("Skystone");
+
 
         VuforiaTrackable stoneTarget = targetsSkyStone.get(0);
         stoneTarget.setName("Stone Target");
@@ -314,6 +315,13 @@ public class VuHolder {
 
         return targetVisible;
 
+    }
+
+    public void activate() {
+        targetsSkyStone.activate();
+    }
+    public void deactivate() {
+        targetsSkyStone.deactivate();
     }
     public Directions getDirections(float x, float y) {
         Directions directions = new Directions();
