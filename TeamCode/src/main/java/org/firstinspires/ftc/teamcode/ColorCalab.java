@@ -150,6 +150,7 @@ public class ColorCalab extends LinearOpMode {
         float vsd = (float) Math.sqrt(vsum / v.size());
         // averaging the hsv values
 
+
         telemetry.addData("H Average", have);
         telemetry.addData("S Average", save);
         telemetry.addData("V Average", vave);
