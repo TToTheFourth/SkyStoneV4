@@ -30,7 +30,7 @@ public class VuHolder {
     float roboth;
 
     // TODO: declare targetSkyStone here but do not initialize - this.vuforia is null at this point so will throw null pointer exception
-    VuforiaTrackables targetsSkyStone = this.vuforia.loadTrackablesFromAsset("Skystone");
+    VuforiaTrackables targetsSkyStone;
 
     // IMPORTANT:  For Phone Camera, set 1) the camera source and 2) the orientation, based on how your phone is mounted:
     // 1) Camera Source.  Valid choices are:  BACK (behind screen) or FRONT (selfie side)
@@ -100,6 +100,7 @@ public class VuHolder {
         // Load the data sets for the trackable objects. These particular data
         // sets are stored in the 'assets' part of our application.
         // TODO: initialize targetSkyStone here - this.vuforia was initialized in the line above.
+       targetsSkyStone = this.vuforia.loadTrackablesFromAsset("Skystone");
 
         VuforiaTrackable stoneTarget = targetsSkyStone.get(0);
         stoneTarget.setName("Stone Target");

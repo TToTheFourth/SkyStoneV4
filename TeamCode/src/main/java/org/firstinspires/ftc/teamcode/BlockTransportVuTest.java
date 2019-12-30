@@ -21,7 +21,7 @@ public class BlockTransportVuTest extends LinearOpMode {
         waitForStart();
        // vu.activate();
         bot.startGyro();
-        vu.check();
+       // vu.check();
         if(vu.check() == true) {
             Directions dir = vu.getDirections(-36,70 );
             telemetry.addData("YES", "Working");
