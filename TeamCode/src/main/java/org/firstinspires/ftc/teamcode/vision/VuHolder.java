@@ -29,7 +29,7 @@ public class VuHolder {
     float roboty;
     float roboth;
 
-    // TODO: declare targetSkyStone here but do not initialize - this.vuforia is null at this point so will throw null pointer exception
+
     VuforiaTrackables targetsSkyStone;
 
     // IMPORTANT:  For Phone Camera, set 1) the camera source and 2) the orientation, based on how your phone is mounted:
@@ -39,7 +39,7 @@ public class VuHolder {
     // NOTE: If you are running on a CONTROL HUB, with only one USB WebCam, you must select CAMERA_CHOICE = BACK; and PHONE_IS_PORTRAIT = false;
     //
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = BACK;
-    private static final boolean PHONE_IS_PORTRAIT = false  ;
+    private static final boolean PHONE_IS_PORTRAIT = true;
 
     /*
      * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
@@ -99,7 +99,7 @@ public class VuHolder {
 
         // Load the data sets for the trackable objects. These particular data
         // sets are stored in the 'assets' part of our application.
-        // TODO: initialize targetSkyStone here - this.vuforia was initialized in the line above.
+
        targetsSkyStone = this.vuforia.loadTrackablesFromAsset("Skystone");
 
         VuforiaTrackable stoneTarget = targetsSkyStone.get(0);
@@ -327,6 +327,14 @@ public class VuHolder {
     public void deactivate() {
         targetsSkyStone.deactivate();
     }
+    public float xCoor() {
+        float xCoor = robotx;
+        return xCoor;
+    }
+    public float yCoor() {
+        float yCoor = roboty;
+        return yCoor;
+    }
     public Directions getDirections(float x, float y) {
         Directions directions = new Directions();
         float distance = getDistance(x, y, robotx, roboty);
@@ -335,7 +343,6 @@ public class VuHolder {
         directions.setHeading(heading);
         return directions;
     }
-
     private float getDirection(float x, float y, float xr, float yr, float heading, float distance) {
         double h = (double) heading;
         double x1 = (double) xr;
