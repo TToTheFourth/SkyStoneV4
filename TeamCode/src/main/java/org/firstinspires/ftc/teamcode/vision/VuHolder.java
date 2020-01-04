@@ -262,18 +262,20 @@ public class VuHolder {
             // check all the trackable targets to see which one (if any) is visible.
             targetVisible = false;
             for (VuforiaTrackable trackable : allTrackables) {
-                if (((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible()) {
-                    opMode.telemetry.addData("Visible Target", trackable.getName());
+                if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible()) {
+                    //opMode.telemetry.addData("Visible Target", trackable.getName());
                     targetVisible = true;
+                    // opMode.telemetry.update();
 
                     // getUpdatedRobotLocation() will return null if no new information is available since
                     // the last time that call was made, or if the trackable is not currently visible.
-                    OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
+                    OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener) trackable.getListener()).getUpdatedRobotLocation();
                     if (robotLocationTransform != null) {
                         lastLocation = robotLocationTransform;
                     }
                     break;
                 }
+            }
 
             // Provide feedback as to where the robot is located (if we know).
             if (targetVisible) {
@@ -300,9 +302,12 @@ public class VuHolder {
                 roboty = y;
                 roboth = heading;
 
+                opMode.telemetry.addData("x", robotx);
+                opMode.telemetry.addData("y", roboty);
+                opMode.telemetry.update();
             }
-            opMode.telemetry.update();
-        }
+            //opMode.telemetry.update();
+
 //        float distance = getDistance(xtarget, ytarget, xrobot, yrobot);
 //        float rotate = this.getDirection(xtarget, ytarget, xrobot, yrobot, hrobot, distance);
 
@@ -318,7 +323,6 @@ public class VuHolder {
 //        targetsSkyStone.deactivate();
 
         return targetVisible;
-
     }
 
     public void activate() {

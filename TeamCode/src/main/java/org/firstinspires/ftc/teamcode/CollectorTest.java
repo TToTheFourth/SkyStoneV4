@@ -19,13 +19,14 @@ public class CollectorTest extends LinearOpMode {
         waitForStart();
         while(!this.isStopRequested()) {
             if (vu.check() == true) {
-                telemetry.addData("X Coordinate", vu.xCoor());
-                telemetry.addData("Y Coordinate", vu.yCoor());
-                telemetry.addData("Working", "YES");
+                Directions dir = vu.getDirections(35, 35);
+                telemetry.addData("heading %.1f", dir.getHeading());
+                telemetry.addData("distance %.1f", dir.getDistance());
+               // telemetry.addData("Working", "YES");
                 telemetry.update();
             } else {
-                telemetry.addData("Working", "NO");
-                telemetry.update();
+               // telemetry.addData("Working", "NO");
+               // telemetry.update();
             }
         }
     }
