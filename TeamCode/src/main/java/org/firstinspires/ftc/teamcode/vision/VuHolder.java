@@ -282,29 +282,32 @@ public class VuHolder {
                 // express position (translation) of robot in inches.
                 VectorF translation = lastLocation.getTranslation();
                 //float x = translation.get(0) / mmPerInch;
-                opMode.telemetry.addData("Pos (in)", "{X, Y, Z} = %.1f, %.1f, %.1f",
-                        translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch);
+//                opMode.telemetry.addData("Pos (in)", "{X, Y, Z} = %.1f, %.1f, %.1f",
+//                        translation.get(0) / mmPerInch, translation.get(1) / mmPerInch, translation.get(2) / mmPerInch);
+
+//                opMode.telemetry.addData("Pos (in)", "{X, Y, Z} = %.1f, %.1f, %.1f",
+//                        translation.get(0), translation.get(1), translation.get(2));
 
 
-                float x = translation.get(0);
-                float y = translation.get(1);
-                float z = translation.get(2);
+                float x = translation.get(0) / mmPerInch;
+                float y = translation.get(1) / mmPerInch;
+                float z = translation.get(2) / mmPerInch;
 
                 // express the rotation of the robot in degrees.
                 Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
-                opMode.telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
+                //opMode.telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
 
                 float roll = rotation.firstAngle;
                 float pitch = rotation.secondAngle;
-                float heading = rotation.thirdAngle;
+                float heading = (float) Math.toRadians(rotation.thirdAngle);
 
                 robotx = x;
                 roboty = y;
                 roboth = heading;
 
-                opMode.telemetry.addData("x", robotx);
-                opMode.telemetry.addData("y", roboty);
-                opMode.telemetry.update();
+//                opMode.telemetry.addData("x", robotx);
+//                opMode.telemetry.addData("y", roboty);
+//                opMode.telemetry.update();
             }
             //opMode.telemetry.update();
 
@@ -347,7 +350,7 @@ public class VuHolder {
         directions.setHeading(heading);
         return directions;
     }
-    private float getDirection(float x, float y, float xr, float yr, float heading, float distance) {
+    public float getDirection(float x, float y, float xr, float yr, float heading, float distance) {
         double h = (double) heading;
         double x1 = (double) xr;
         double y1 = (double) yr;
@@ -383,7 +386,7 @@ public class VuHolder {
 
         return theta;
     }
-    private float getDistance(float xp, float yp, float xr, float yr) {
+    public float getDistance(float xp, float yp, float xr, float yr) {
         double xp1 = (double) xp;
         double yp1 = (double) yp;
         double xr1 = (double) xr;
