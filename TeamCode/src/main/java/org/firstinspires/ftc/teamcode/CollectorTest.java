@@ -27,7 +27,7 @@ public class CollectorTest extends LinearOpMode {
         bot.startGyro();
         while(!this.isStopRequested()) {
             for (int i = 0; i < path.length; i++) {
-                if (vu.check() == true) {
+                if (/*vu.check() == true*/ 1 == 2) {
                     x = path[i][0];
                     y = path[i][1];
                     Directions dirt = vu.getDirections(x, y);
@@ -42,6 +42,7 @@ public class CollectorTest extends LinearOpMode {
                     }else{
                         bot.turnRight(dirst, 0.3);
                     }
+
                     bot.goForward(0.5, dist);
                 } else {
                     telemetry.addData("Working", "NO");
