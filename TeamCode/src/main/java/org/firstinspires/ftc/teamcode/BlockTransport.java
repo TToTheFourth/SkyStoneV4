@@ -15,7 +15,7 @@ public class BlockTransport extends LinearOpMode {
         telemetry.update();
 
         waitForStart();
-
+        bot.getReady(.9);
         bot.startGyro();
         bot.forwardUntil(2, 0.3);
         //the robot goes forward until the range sensor is close to the blocks,

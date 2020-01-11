@@ -19,6 +19,7 @@ public class BlockTransportVuTest extends LinearOpMode {
         telemetry.update();
 
         waitForStart();
+        bot.getReady(.9);
        // vu.activate();
         bot.startGyro();
        // vu.check();

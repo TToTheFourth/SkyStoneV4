@@ -17,6 +17,7 @@ public class FoundationDrag extends LinearOpMode {
         waitForStart();
 
         bot.startGyro();
+        bot.getReady(.9);
         bot.ServoUnlatch();
         // sets servos in starting positiion
         timer.waitT(8000);

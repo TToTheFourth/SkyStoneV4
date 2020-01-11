@@ -278,6 +278,11 @@ public class RepresentoBotSupremeLeader {
         // sets claw to a position
     }
 
+    public void getReady(double pos) {
+        claw.setPosition(pos);
+        myTimer.waitT(1000);
+    }
+
     double factor = 1.0;
     public void goForward(double power, double distance){
         double rightY_G1 = 1.0 * power;

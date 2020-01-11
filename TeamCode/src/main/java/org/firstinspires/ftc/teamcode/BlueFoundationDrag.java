@@ -17,6 +17,7 @@ public class BlueFoundationDrag extends LinearOpMode {
         waitForStart();
 
         bot.startGyro();
+        bot.getReady(.9);
         bot.ServoUnlatch();
         //resets servo position
         timer.waitT(8000);
