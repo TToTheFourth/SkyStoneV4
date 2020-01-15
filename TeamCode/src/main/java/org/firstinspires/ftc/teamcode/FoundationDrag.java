@@ -17,9 +17,9 @@ public class FoundationDrag extends LinearOpMode {
         waitForStart();
 
         bot.startGyro();
-        bot.getReady(.9);
+        //bot.getReady(.1);
         bot.ServoUnlatch();
-        // sets servos in starting positiion
+        // sets servos in starting position
         timer.waitT(8000);
         // waits, just in case an alliance partner places a block on the foundation
         bot.goForward(-0.5, 1);

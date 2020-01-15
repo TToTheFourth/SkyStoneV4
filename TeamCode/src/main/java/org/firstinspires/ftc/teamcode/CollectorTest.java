@@ -26,9 +26,10 @@ public class CollectorTest extends LinearOpMode {
         float curh;
         bot.startGyro();
         bot.getReady(.9);
-        while(!this.isStopRequested()) {
-            for (int i = 0; i < path.length; i++) {
-                if (/*vu.check() == true*/ 1 == 2) {
+        if (!this.isStopRequested()) {
+            for (int i = 1; i < path.length; i++) {
+                if (/*vu.check() == true*/ 1 == 1) {
+                    vu.check();
                     x = path[i][0];
                     y = path[i][1];
                     Directions dirt = vu.getDirections(x, y);

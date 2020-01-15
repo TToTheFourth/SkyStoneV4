@@ -17,14 +17,14 @@ public class BlueFoundationDrag extends LinearOpMode {
         waitForStart();
 
         bot.startGyro();
-        bot.getReady(.9);
+        //bot.getReady(.1);
         bot.ServoUnlatch();
         //resets servo position
         timer.waitT(8000);
         // waits in case alliance partner wants to place a block on the foundation
         bot.goForward(-0.5, 1);
         // moves off wall
-        bot.slide(-0.5, 4);
+        bot.slide(-0.5, 8);
         // repositions to face the middle of the foundation
         bot.goForward(-0.5, 30);
         // move to the foundation
