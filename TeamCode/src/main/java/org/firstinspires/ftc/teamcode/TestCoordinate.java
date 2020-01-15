@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.vision.Directions;
 import org.firstinspires.ftc.teamcode.vision.VuHolder;
 
 public class TestCoordinate extends LinearOpMode {
@@ -18,6 +19,8 @@ public void runOpMode() {
             if(vu.check() == true) {
                 telemetry.addData("X Coordinate", vu.xCoor());
                 telemetry.addData("Y Coordinate", vu.yCoor());
+                Directions dir = vu.getDirections(vu.xCoor(), vu.yCoor());
+                telemetry.addData("distance %.1f", dir.getDistance());
                 telemetry.update();
             }else {
                 telemetry.addData("Working", "NO");
