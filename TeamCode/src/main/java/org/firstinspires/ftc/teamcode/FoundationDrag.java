@@ -24,15 +24,15 @@ public class FoundationDrag extends LinearOpMode {
         // waits, just in case an alliance partner places a block on the foundation
         bot.goForward(-0.5, 1);
         // gets the robot off the wall
-        bot.slide(0.5, 4);
+        bot.slide(0.5, 6);
         // slides to the middle of the foundation
-        bot.goForward(-0.5, 30);
+        bot.goForward(-0.5, 31);
         // goes forward to the foundation
         bot.servoLatch();
         // grabs the foundation
         timer.waitT(1000);
         // waits for the servos to fully latch onto the foundation
-        bot.goForward(0.5, 31);
+        bot.goForward(0.5, 32);
         // goes backwards to the wall
         bot.slide(0.5, 4.5);
         // slides into the corner to maximize the success of the program

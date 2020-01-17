@@ -28,7 +28,7 @@ public class CollectorTest extends LinearOpMode {
         bot.getReady(.9);
         if (!this.isStopRequested()) {
             for (int i = 1; i < path.length; i++) {
-                if (/*vu.check() == true*/ 1 == 1) {
+                if (vu.check() == true) {
                     vu.check();
                     x = path[i][0];
                     y = path[i][1];

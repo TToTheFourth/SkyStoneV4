@@ -301,9 +301,9 @@ public class VuHolder {
                 float pitch = rotation.secondAngle;
                 float heading = (float) Math.toRadians(rotation.thirdAngle);
 
-                robotx = x;
-                roboty = y;
-                roboth = heading;
+                robotx = x * -1;
+                roboty = y * -1;
+                roboth = heading + (float)Math.PI;
 
 //                opMode.telemetry.addData("x", robotx);
 //                opMode.telemetry.addData("y", roboty);
