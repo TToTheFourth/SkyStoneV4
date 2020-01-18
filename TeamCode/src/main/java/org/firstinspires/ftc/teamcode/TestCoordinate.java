@@ -21,9 +21,10 @@ public void runOpMode() {
             if(vu.check() == true) {
                 telemetry.addData("X Coordinate", vu.xCoor());
                 telemetry.addData("Y Coordinate", vu.yCoor());
+                telemetry.addData("R Heading", vu.heading());
                 Directions dir = vu.getDirections(-35, 0);
-                telemetry.addData("distance %.1f", dir.getDistance());
-                telemetry.addData("heading %.1f", dir.getHeading());
+                telemetry.addData("distance ", dir.getDistance());
+                telemetry.addData("heading ", Math.toDegrees(dir.getHeading()));
                 telemetry.update();
             }else {
                 telemetry.addData("Working", "NO");

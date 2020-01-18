@@ -36,18 +36,20 @@ public class CollectorTest extends LinearOpMode {
                     telemetry.addData("heading %.1f", dirt.getHeading());
                     telemetry.addData("distance %.1f", dirt.getDistance());
                     telemetry.addData("Working", "YES");
-                    telemetry.update();
                     float dirst = (float)Math.toDegrees(dirt.getHeading());
+                    telemetry.addData("heading2 ", dirst);
+                    telemetry.update();
                     float dist = dirt.getDistance();
                     if(dirst > 0){
                         bot.turnLeft(dirst, 0.3);
                     }else{
-                        bot.turnRight(dirst, 0.3);
+                        bot.turnRight(-dirst, 0.3);
                     }
                     bot.goForward(0.5, dist);
                 } else {
                     telemetry.addData("Working", "NO");
                     telemetry.update();
+                    /*
                     curx = path[i - 1][0];
                     curry = path[i - 1][1];
                     curh = path[i - 1][2];
@@ -62,7 +64,9 @@ public class CollectorTest extends LinearOpMode {
                         bot.turnRight(dir, 0.3);
                     }
                     bot.goForward(0.5, dist);
+                    */
                 }
+                bot.timeRackOut(4.5f);
             }
         }
     }

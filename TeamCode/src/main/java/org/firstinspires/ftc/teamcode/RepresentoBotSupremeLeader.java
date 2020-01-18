@@ -260,9 +260,22 @@ public class RepresentoBotSupremeLeader {
         // tells the colors now that they are normalized
     }
 
-    public void timeRack(long time) {
-        myTimer.setCompareTime(time * 1000);
+    public void timeRackIn(float time) {
+        myTimer.setCompareTime((long)(time * 1000));
         rackMotor.setPower(1);
+        myTimer.start();
+        while (opMode.opModeIsActive()) {
+            if (myTimer.timeChecker()) {
+                break;
+            }
+        }
+        rackMotor.setPower(0);
+        // moves the rack for a certain amount of time
+    }
+
+    public void timeRackOut(float time) {
+        myTimer.setCompareTime((long)(time * 1000));
+        rackMotor.setPower(-1);
         myTimer.start();
         while (opMode.opModeIsActive()) {
             if (myTimer.timeChecker()) {
