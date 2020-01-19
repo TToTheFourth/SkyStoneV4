@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.vision.Directions;
 import org.firstinspires.ftc.teamcode.vision.VuHolder;
 
 @Autonomous
-public class CollectorTest extends LinearOpMode {
+public class VuFieldTest extends LinearOpMode {
     @Override
     public void runOpMode() {
 

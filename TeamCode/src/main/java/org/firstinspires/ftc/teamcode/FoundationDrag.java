@@ -46,5 +46,8 @@ public class FoundationDrag extends LinearOpMode {
         // waiting to make sure the foundation will not be dragged more by the servos
         bot.slide(-0.75, 53);
         // robot slides onto line
+        //timer.waitT(3000);
+        //bot.timeRackOut(4.5f);
+        // moves the rack out, so it doesn't need to come out later
     }
 }

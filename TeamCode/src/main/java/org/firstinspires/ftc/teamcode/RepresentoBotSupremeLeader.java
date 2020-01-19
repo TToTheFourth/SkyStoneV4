@@ -210,6 +210,10 @@ public class RepresentoBotSupremeLeader {
             }
         }
         // sets the inches to ticks so the motors understand
+        frontLeftMotor.setPower(0);
+        backLeftMotor.setPower(0);
+        backRightMotor.setPower(0);
+        frontRightMotor.setPower(0);
     }
 
     public void slideWhile(double power) {
