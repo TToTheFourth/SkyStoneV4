@@ -26,13 +26,13 @@ public class BlueFoundationDrag extends LinearOpMode {
         // moves off wall
         bot.slide(-0.5, 8);
         // repositions to face the middle of the foundation
-        bot.goForward(-0.5, 30);
+        bot.goForward(-0.5, 31);
         // move to the foundation
         bot.servoLatch();
         // latches the servos on the foundation
         timer.waitT(1000);
         // makes sure the servos latched unto the foundation
-        bot.goForward(0.5, 31);
+        bot.goForward(0.5, 32);
         // moves back to the wall
         bot.slide(-0.5, 4.5);
         // slides into building corner
@@ -46,5 +46,7 @@ public class BlueFoundationDrag extends LinearOpMode {
         // makes sure the servo has unlatched from the foundation
         bot.slide(0.75, 53);
         // slides unto the line
+        //bot.timeRackOut(4.5f);
+        // moves the rack out, so it doesn't need to come out later
     }
 }
