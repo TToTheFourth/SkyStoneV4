@@ -1,19 +1,17 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.vision.Directions;
 import org.firstinspires.ftc.teamcode.vision.VuHolder;
 
-@Autonomous
-public class CollectorTest extends LinearOpMode {
+public class VuBlockGrabTest extends LinearOpMode {
     @Override
     public void runOpMode() {
 
         VuHolder vu = new VuHolder(this);
         RepresentoBotSupremeLeader bot = new RepresentoBotSupremeLeader(this);
-        float path[][] = {{-35, -45, 3.14f/2}, {-15, -45, 3.14f/2}, {0, -45, 3.14f/2}, {15, -40, 3.14f/2}, {35, -35, 3.14f/2}, {35, 15, 3.14f/2}, {35, 0, 3.14f/2}, {35, 15, 3.14f/2}, {35, 35, 3.14f/2}};
+        float path[][] = {{-35, -35, 3.14f/2}, {0, -35, 3.14f/2}, {35, -35, 3.14f/2}, {35, 0, 3.14f/2}, {35, 35, 3.14f/2}};
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -39,7 +37,6 @@ public class CollectorTest extends LinearOpMode {
                     float dirst = (float)Math.toDegrees(dirt.getHeading());
                     telemetry.addData("heading2 ", dirst);
                     telemetry.update();
-                    sleep(5000);
                     float dist = dirt.getDistance();
                     if(dirst > 0){
                         bot.turnLeft(dirst, 0.3);
@@ -50,25 +47,23 @@ public class CollectorTest extends LinearOpMode {
                 } else {
                     telemetry.addData("Working", "NO");
                     telemetry.update();
-//                    curx = path[i - 1][0];
-//                    curry = path[i - 1][1];
-//                    curh = path[i - 1][2];
-//                    x = path[i][0];
-//                    y = path[i][1];
-//                    float dist = vu.getDistance(x, y, curx, curry);
-//                    float dir = vu.getDirection(x, y, curx, curry, curh, dist);
-//                    dir = (float)Math.toDegrees(dir);
-//                    if(dir > 0){
-//                        bot.turnLeft(dir, 0.3);
-//                    }else{
-//                        bot.turnRight(dir, 0.3);
-//                    }
-//                    bot.goForward(0.5, dist);
+                    curx = path[i - 1][0];
+                    curry = path[i - 1][1];
+                    curh = path[i - 1][2];
+                    x = path[i][0];
+                    y = path[i][1];
+                    float dist = vu.getDistance(x, y, curx, curry);
+                    float dir = vu.getDirection(x, y, curx, curry, curh, dist);
+                    dir = (float)Math.toDegrees(dir);
+                    if(dir > 0){
+                        bot.turnLeft(dir, 0.3);
+                    }else{
+                        bot.turnRight(dir, 0.3);
+                    }
+                    bot.goForward(0.5, dist);
                 }
 //                bot.timeRackOut(4.5f);
-                bot.stopMotor();
             }
         }
-        bot.stopMotor();
     }
 }

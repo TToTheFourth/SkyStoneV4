@@ -335,6 +335,12 @@ public class RepresentoBotSupremeLeader {
         frontRightMotor.setPower(0.0);
         // sets motors to zero
     }
+    public void stopMotor(){
+        frontLeftMotor.setPower(0.0);
+        backLeftMotor.setPower(0.0);
+        backRightMotor.setPower(0.0);
+        frontRightMotor.setPower(0.0);
+    }
     public long ticksToInchesForward(double inches) {
         return (long) (inches * 30.26086956217);
         // ticks forward formula
