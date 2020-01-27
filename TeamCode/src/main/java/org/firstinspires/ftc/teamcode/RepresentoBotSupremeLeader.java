@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.vision.VuHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -326,6 +327,7 @@ public class RepresentoBotSupremeLeader {
             if (rotations >= ticks) {
                 break;
             }
+            opMode.idle();
             // makes inches transfer to ticks
         }
 

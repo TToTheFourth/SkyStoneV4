@@ -13,12 +13,13 @@ public class CollectorTest extends LinearOpMode {
 
         VuHolder vu = new VuHolder(this);
         RepresentoBotSupremeLeader bot = new RepresentoBotSupremeLeader(this);
-        float path[][] = {{-35, -45, 3.14f/2}, {-15, -45, 3.14f/2}, {0, -45, 3.14f/2}, {15, -40, 3.14f/2}, {35, -35, 3.14f/2}, {35, 15, 3.14f/2}, {35, 0, 3.14f/2}, {35, 15, 3.14f/2}, {35, 35, 3.14f/2}};
+        float path[][] = {{-35, -45, 3.14f/2}, {35, -45, 3.14f/2}, {35, 35, 3.14f/2}};
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
         waitForStart();
+        vu.activate();
         float x;
         float y;
         float curx;
@@ -28,18 +29,32 @@ public class CollectorTest extends LinearOpMode {
         bot.getReady(.9);
         if (!this.isStopRequested()) {
             for (int i = 1; i < path.length; i++) {
+
+                // new! search for target
+                if(!vu.check()) {
+                    for(int j = 0; j < 18; j++) {
+                        bot.turnRight(10, 0.3);
+                        sleep(500);
+                        if(vu.check()) {
+                            break;
+                        }
+                    }
+                }
+
                 if (vu.check() == true) {
-                    vu.check();
+                    //vu.check();
                     x = path[i][0];
                     y = path[i][1];
                     Directions dirt = vu.getDirections(x, y);
-                    telemetry.addData("heading %.1f", dirt.getHeading());
-                    telemetry.addData("distance %.1f", dirt.getDistance());
-                    telemetry.addData("Working", "YES");
                     float dirst = (float)Math.toDegrees(dirt.getHeading());
-                    telemetry.addData("heading2 ", dirst);
+
+                    telemetry.addData("FROM ", "(%.0f,%.0f) %.0f", vu.xCoor(), vu.yCoor(), (float)Math.toDegrees(vu.heading()));
+                    telemetry.addData("TO ", "(%.0f,%.0f)", x, y);
+                    telemetry.addData("DIR ", "Heading %.0f Dist %.0f", dirst, dirt.getDistance());
+
                     telemetry.update();
-                    sleep(5000);
+                    sleep(10000);
+
                     float dist = dirt.getDistance();
                     if(dirst > 0){
                         bot.turnLeft(dirst, 0.3);

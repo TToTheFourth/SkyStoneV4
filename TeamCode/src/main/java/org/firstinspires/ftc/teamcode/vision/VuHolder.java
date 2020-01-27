@@ -94,6 +94,9 @@ public class VuHolder {
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
         parameters.cameraDirection   = CAMERA_CHOICE;
 
+        // new! this is very important!!
+        parameters.useExtendedTracking = false;
+
         //  Instantiate the Vuforia engine
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
 
@@ -254,7 +257,7 @@ public class VuHolder {
         // CONSEQUENTLY do not put any driving commands in this loop.
         // To restore the normal opmode structure, just un-comment the following line:
 
-        targetsSkyStone.activate();
+        //targetsSkyStone.activate();
     }
 
     public boolean check() {
@@ -263,8 +266,8 @@ public class VuHolder {
             targetVisible = false;
             for (VuforiaTrackable trackable : allTrackables) {
                 if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible()) {
-                    //opMode.telemetry.addData("Visible Target", trackable.getName());
                     targetVisible = true;
+                    //opMode.telemetry.addData("Visible Target", trackable.getName());
                     // opMode.telemetry.update();
 
                     // getUpdatedRobotLocation() will return null if no new information is available since
