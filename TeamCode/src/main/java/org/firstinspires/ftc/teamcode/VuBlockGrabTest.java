@@ -19,6 +19,7 @@ public class VuBlockGrabTest extends LinearOpMode {
         telemetry.update();
 
         waitForStart();
+        vu.activate();
         float x;
         float y;
         float curx;
@@ -29,14 +30,15 @@ public class VuBlockGrabTest extends LinearOpMode {
         if (!this.isStopRequested()) {
             //bot.getReady(0.9);
             bot.timeRackOut(4f);
-            bot.goForward(0.5, 1);
+            bot.forwardUntil(12, 0.3);
 //            if (!vu.checkForSkystone()) {
 //                vu.checkForSkystone();
                 for (int g = 0; g < 11; g++) {
                     if (vu.checkForSkystone()) {
                         break;
                     }
-                    bot.slide(0.5, 4);
+                    bot.slide(0.3, 4);
+                    sleep(500);
                 }
                 bot.forwardUntil(2, 0.3);
                 bot.getReady(.3);
@@ -97,5 +99,6 @@ public class VuBlockGrabTest extends LinearOpMode {
             bot.stopMotor();
        // }
         bot.stopMotor();
+        vu.deactivate();
     }
 }
