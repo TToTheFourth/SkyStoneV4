@@ -40,7 +40,7 @@ public class VuBlockGrabTest extends LinearOpMode {
                     bot.slide(0.3, 4);
                     sleep(500);
                 }
-                bot.forwardUntil(2, 0.3);
+                bot.goForward(0.3, 8);
                 bot.getReady(.3);
                 bot.goForward(-0.5, 5);
                 while (!vu.check()) {
