@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.vuforia.CameraDevice;
 
 import org.firstinspires.ftc.teamcode.vision.Directions;
 import org.firstinspires.ftc.teamcode.vision.VuHolder;
@@ -30,6 +31,7 @@ public class VuBlockGrabTest extends LinearOpMode {
         if (!this.isStopRequested()) {
             //bot.getReady(0.9);
             bot.timeRackOut(4f);
+            CameraDevice.getInstance().setFlashTorchMode(true);
             bot.forwardUntil(10, 0.3);
 //            if (!vu.checkForSkystone()) {
 //                vu.checkForSkystone();
