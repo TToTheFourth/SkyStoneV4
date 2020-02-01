@@ -236,6 +236,7 @@ public class VuHolder {
         // Rotate the phone vertical about the X axis if it's in portrait mode
         if (PHONE_IS_PORTRAIT) {
             phoneXRotate = 90 ;
+            //todo: make negative?
         }
 
         // Next, translate the camera lens to where it is on the robot.
