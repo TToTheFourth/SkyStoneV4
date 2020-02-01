@@ -41,6 +41,7 @@ public class RepresentoBotSupremeLeader {
     private DistanceSensor sensorDistance;
     private NormalizedColorSensor sensorColor;
     ModernRoboticsI2cRangeSensor rangeSensor;
+    private Gyro2 miniGyro;
 
     public RepresentoBotSupremeLeader(LinearOpMode om) {
         this.opMode = om;
@@ -81,7 +82,7 @@ public class RepresentoBotSupremeLeader {
 
     public void startGyro(){
         gyro.StartGyro();
-
+        miniGyro = gyro.getMiniGyro();
     }
 
     public void turnRight(double degrees, double power) {
@@ -170,9 +171,16 @@ public class RepresentoBotSupremeLeader {
         frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
         // connects motors to the correct variable(s)
 
+        miniGyro.reset();
         while (opMode.opModeIsActive()) {
             if (sensorDistance.getDistance(DistanceUnit.INCH) < until) {
                 break;
+            }
+
+            if (miniGyro.getAngle() > 2) {
+                turnRight(miniGyro.getAngle(), 0.3);
+            }else if (miniGyro.getAngle() < -2){
+                turnLeft (-1 * miniGyro.getAngle(), 0.3);
             }
         }
         // sets the distance sensor to go until we are inches away from something
@@ -200,6 +208,7 @@ public class RepresentoBotSupremeLeader {
         backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         // sets encoder
 
+        miniGyro.reset();
         long ticks = ticksToInchesSlide(distance);
         while (opMode.opModeIsActive()) {
             int rotations = backLeftMotor.getCurrentPosition();
@@ -208,6 +217,12 @@ public class RepresentoBotSupremeLeader {
             }
             if (rotations >= ticks) {
                 break;
+            }
+
+            if (miniGyro.getAngle() > 2) {
+                turnRight(miniGyro.getAngle(), 0.3);
+            }else if (miniGyro.getAngle() < -2){
+                turnLeft (-1 * miniGyro.getAngle(), 0.3);
             }
         }
         // sets the inches to ticks so the motors understand
@@ -319,6 +334,7 @@ public class RepresentoBotSupremeLeader {
         // sets the encoders
 
         long ticks = ticksToInchesForward(distance);
+        miniGyro.reset();
         while (opMode.opModeIsActive()) {
             int rotations = backLeftMotor.getCurrentPosition();
             if (rotations<0) {
@@ -327,7 +343,12 @@ public class RepresentoBotSupremeLeader {
             if (rotations >= ticks) {
                 break;
             }
-            opMode.idle();
+
+            if (miniGyro.getAngle() > 2) {
+                turnRight(miniGyro.getAngle(), 0.3);
+            }else if (miniGyro.getAngle() < -2){
+                turnLeft (-1 * miniGyro.getAngle(), 0.3);
+            }
             // makes inches transfer to ticks
         }
 

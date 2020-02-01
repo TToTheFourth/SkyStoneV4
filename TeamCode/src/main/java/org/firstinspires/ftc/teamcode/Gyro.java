@@ -25,6 +25,11 @@ public class Gyro {
         this.opMode = opMode;
     }
 
+
+    public Gyro2 getMiniGyro() {
+        return new Gyro2(this.gyro);
+    }
+
     public void resetWithDirection(int dir) {
         this.direction = dir;
 
