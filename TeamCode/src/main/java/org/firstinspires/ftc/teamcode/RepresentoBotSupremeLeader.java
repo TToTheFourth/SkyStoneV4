@@ -177,10 +177,10 @@ public class RepresentoBotSupremeLeader {
                 break;
             }
 
-            if (miniGyro.getAngle() > 2) {
-                turnRight(miniGyro.getAngle(), 0.3);
-            }else if (miniGyro.getAngle() < -2){
-                turnLeft (-1 * miniGyro.getAngle(), 0.3);
+            if (miniGyro.getAngle() > 4) {
+                turnRight(0.75 * miniGyro.getAngle(), 0.3);
+            }else if (miniGyro.getAngle() < -4){
+                turnLeft (-0.75 * miniGyro.getAngle(), 0.3);
             }
         }
         // sets the distance sensor to go until we are inches away from something
@@ -219,10 +219,10 @@ public class RepresentoBotSupremeLeader {
                 break;
             }
 
-            if (miniGyro.getAngle() > 2) {
-                turnRight(miniGyro.getAngle(), 0.3);
-            }else if (miniGyro.getAngle() < -2){
-                turnLeft (-1 * miniGyro.getAngle(), 0.3);
+            if (miniGyro.getAngle() > 4) {
+                turnRight(0.75 * miniGyro.getAngle(), 0.3);
+            }else if (miniGyro.getAngle() < -4){
+                turnLeft (-0.75 * miniGyro.getAngle(), 0.3);
             }
         }
         // sets the inches to ticks so the motors understand
@@ -344,10 +344,10 @@ public class RepresentoBotSupremeLeader {
                 break;
             }
 
-            if (miniGyro.getAngle() > 2) {
-                turnRight(miniGyro.getAngle(), 0.3);
-            }else if (miniGyro.getAngle() < -2){
-                turnLeft (-1 * miniGyro.getAngle(), 0.3);
+            if (miniGyro.getAngle() > 4) {
+                turnRight(0.75 * miniGyro.getAngle(), 0.3);
+            }else if (miniGyro.getAngle() < -4){
+                turnLeft (-0.75 * miniGyro.getAngle(), 0.3);
             }
             // makes inches transfer to ticks
         }
