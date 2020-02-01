@@ -30,7 +30,7 @@ public class VuBlockGrabTest extends LinearOpMode {
         if (!this.isStopRequested()) {
             //bot.getReady(0.9);
             bot.timeRackOut(4f);
-            bot.forwardUntil(12, 0.3);
+            bot.forwardUntil(10, 0.3);
 //            if (!vu.checkForSkystone()) {
 //                vu.checkForSkystone();
                 for (int g = 0; g < 11; g++) {
