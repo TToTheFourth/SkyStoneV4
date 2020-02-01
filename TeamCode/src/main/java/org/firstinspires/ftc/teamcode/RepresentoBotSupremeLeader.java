@@ -179,8 +179,18 @@ public class RepresentoBotSupremeLeader {
 
             if (miniGyro.getAngle() > 4) {
                 turnRight(0.75 * miniGyro.getAngle(), 0.3);
+                frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
+                backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
+                backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
+                frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
+
             }else if (miniGyro.getAngle() < -4){
                 turnLeft (-0.75 * miniGyro.getAngle(), 0.3);
+                frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
+                backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
+                backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
+                frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
+
             }
         }
         // sets the distance sensor to go until we are inches away from something
@@ -221,8 +231,16 @@ public class RepresentoBotSupremeLeader {
 
             if (miniGyro.getAngle() > 4) {
                 turnRight(0.75 * miniGyro.getAngle(), 0.3);
+                frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
+                backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
+                backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
+                frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
             }else if (miniGyro.getAngle() < -4){
                 turnLeft (-0.75 * miniGyro.getAngle(), 0.3);
+                frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
+                backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
+                backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
+                frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
             }
         }
         // sets the inches to ticks so the motors understand
@@ -346,8 +364,16 @@ public class RepresentoBotSupremeLeader {
 
             if (miniGyro.getAngle() > 4) {
                 turnRight(0.75 * miniGyro.getAngle(), 0.3);
+                frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
+                backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
+                backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
+                frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
             }else if (miniGyro.getAngle() < -4){
                 turnLeft (-0.75 * miniGyro.getAngle(), 0.3);
+                frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
+                backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
+                backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
+                frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
             }
             // makes inches transfer to ticks
         }
