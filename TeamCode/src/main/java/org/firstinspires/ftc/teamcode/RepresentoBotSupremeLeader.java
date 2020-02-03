@@ -5,7 +5,6 @@ import android.graphics.Color;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
@@ -13,12 +12,13 @@ import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.vision.VuHolder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RepresentoBotSupremeLeader {
+
+    private static final double MAX_ANGLE = 3.0;
+    private static final double ANGLE_ADJ_PERC = 0.5;
+    private static final double ANGLE_ADJ_SPEED = 0.2;
+
 
     private Timer myTimer;
 
@@ -95,10 +95,10 @@ public class RepresentoBotSupremeLeader {
         double rightX_G1 = -1.0 * power;
         double leftX_G1 = 0.0;
 
-        frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
-        backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
-        backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
-        frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
+        frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1));
+        backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1));
+        backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1));
+        frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1));
         // connects the motors to the correct variables
 
         // loop until the robot turns :) degrees
@@ -126,10 +126,10 @@ public class RepresentoBotSupremeLeader {
         double rightX_G1 = 1.0 * power;
         double leftX_G1 = 0.0;
 
-        frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
-        backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
-        backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
-        frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
+        frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1));
+        backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1));
+        backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1));
+        frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1));
         // sets the motors to the correct variables
 
         // loop until the robot turns :) degrees
@@ -165,10 +165,10 @@ public class RepresentoBotSupremeLeader {
         double leftX_G1 = 0.0;
         // sets power
 
-        frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
-        backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
-        backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
-        frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
+        frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1));
+        backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1));
+        backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1));
+        frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1));
         // connects motors to the correct variable(s)
 
         miniGyro.reset();
@@ -177,19 +177,19 @@ public class RepresentoBotSupremeLeader {
                 break;
             }
 
-            if (miniGyro.getAngle() > 4) {
-                turnRight(0.75 * miniGyro.getAngle(), 0.3);
-                frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
-                backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
-                backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
-                frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
+            if (miniGyro.getAngle() > MAX_ANGLE) {
+                turnRight(ANGLE_ADJ_PERC * miniGyro.getAngle(), ANGLE_ADJ_SPEED);
+                frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1));
+                backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1));
+                backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1));
+                frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1));
 
-            }else if (miniGyro.getAngle() < -4){
-                turnLeft (-0.75 * miniGyro.getAngle(), 0.3);
-                frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
-                backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
-                backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
-                frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
+            }else if (miniGyro.getAngle() < -MAX_ANGLE){
+                turnLeft (-ANGLE_ADJ_PERC * miniGyro.getAngle(), ANGLE_ADJ_SPEED);
+                frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1));
+                backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1));
+                backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1));
+                frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1));
 
             }
         }
@@ -208,10 +208,11 @@ public class RepresentoBotSupremeLeader {
         double leftX_G1 = 1.0 * power;
         // sets power
 
-        frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
-        backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
-        backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
-        frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
+        double slowperc = 0.6;
+        frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1));
+        backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1));
+        backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1)*slowperc);
+        frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1));
         // connects power to the correct variables
 
         backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -229,18 +230,18 @@ public class RepresentoBotSupremeLeader {
                 break;
             }
 
-            if (miniGyro.getAngle() > 4) {
-                turnRight(0.75 * miniGyro.getAngle(), 0.3);
-                frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
-                backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
-                backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
-                frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
-            }else if (miniGyro.getAngle() < -4){
-                turnLeft (-0.75 * miniGyro.getAngle(), 0.3);
-                frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
-                backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
-                backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
-                frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
+            if (miniGyro.getAngle() > MAX_ANGLE) {
+                turnRight(ANGLE_ADJ_PERC * miniGyro.getAngle(), ANGLE_ADJ_SPEED);
+                frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1));
+                backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1));
+                backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1)*slowperc);
+                frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1));
+            }else if (miniGyro.getAngle() < -MAX_ANGLE){
+                turnLeft (-ANGLE_ADJ_PERC * miniGyro.getAngle(), ANGLE_ADJ_SPEED);
+                frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1));
+                backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1));
+                backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1)*slowperc);
+                frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1));
             }
         }
         // sets the inches to ticks so the motors understand
@@ -256,10 +257,10 @@ public class RepresentoBotSupremeLeader {
         double leftX_G1 = 1.0 * power;
         // sets power
 
-        frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
-        backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
-        backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
-        frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
+        frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1));
+        backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1));
+        backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1));
+        frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1));
         // sets variables to the correct variables
 
         float hsvValues[] = {0, 0, 0};
@@ -334,17 +335,16 @@ public class RepresentoBotSupremeLeader {
         myTimer.waitT(1000);
     }
 
-    double factor = 1.0;
     public void goForward(double power, double distance){
         double rightY_G1 = 1.0 * power;
         double rightX_G1 = 0.0;
         double leftX_G1 = 0.0;
         // sets power
 
-        frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
-        backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
-        backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
-        frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
+        frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1));
+        backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1));
+        backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1));
+        frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1));
         // sets the correct variables to the motors
 
         backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -362,18 +362,18 @@ public class RepresentoBotSupremeLeader {
                 break;
             }
 
-            if (miniGyro.getAngle() > 4) {
-                turnRight(0.75 * miniGyro.getAngle(), 0.3);
-                frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
-                backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
-                backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
-                frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
-            }else if (miniGyro.getAngle() < -4){
-                turnLeft (-0.75 * miniGyro.getAngle(), 0.3);
-                frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1) / factor);
-                backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1) / factor);
-                backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1) / factor);
-                frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1) / factor);
+            if (miniGyro.getAngle() > MAX_ANGLE) {
+                turnRight(ANGLE_ADJ_PERC * miniGyro.getAngle(), ANGLE_ADJ_SPEED);
+                frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1));
+                backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1));
+                backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1));
+                frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1));
+            }else if (miniGyro.getAngle() < -MAX_ANGLE){
+                turnLeft (-ANGLE_ADJ_PERC * miniGyro.getAngle(), ANGLE_ADJ_SPEED);
+                frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1));
+                backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1));
+                backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1));
+                frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1));
             }
             // makes inches transfer to ticks
         }

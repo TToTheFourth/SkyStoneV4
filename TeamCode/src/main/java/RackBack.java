@@ -13,6 +13,6 @@ public class RackBack extends LinearOpMode {
         RepresentoBotSupremeLeader bot = new RepresentoBotSupremeLeader(this);
         waitForStart();
 
-        bot.timeRackIn(3.5f);
+        bot.timeRackIn(3.0f);
     }
 }
