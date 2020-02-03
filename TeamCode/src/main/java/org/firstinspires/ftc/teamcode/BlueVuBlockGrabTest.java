@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.vision.Directions;
 import org.firstinspires.ftc.teamcode.vision.VuHolder;
 
 @Autonomous
-public class VuBlockGrabTest extends LinearOpMode {
+public class BlueVuBlockGrabTest extends LinearOpMode {
     @Override
     public void runOpMode() {
 
@@ -35,39 +35,39 @@ public class VuBlockGrabTest extends LinearOpMode {
             bot.forwardUntil(10, 0.3);
 //            if (!vu.checkForSkystone()) {
 //                vu.checkForSkystone();
-                for (int g = 0; g < 11; g++) {
-                    if (vu.checkForSkystone()) {
-                        bot.slide(0.3, 8);
-                        break;
-                    }
-                    bot.slide(0.5, 4);
-                    sleep(500);
+            for (int g = 0; g < 11; g++) {
+                if (vu.checkForSkystone()) {
+                    bot.slide(-0.3, 8);
+                    break;
                 }
+                bot.slide(-0.5, 4);
+                sleep(500);
+            }
             bot.goForward(0.5, 5);
-                bot.getReady(.3);
-                bot.goForward(-0.5, 7.5);
-                boolean sawTarget = false;
-                for ( int i = 0; i < 9; i++ ) {
-                    bot.turnRight(10, 0.4);
-                    if (vu.check()) {
-                        sawTarget = true;
-                        break;
-                    }
-                    //todo: change to less degrees?
+            bot.getReady(.3);
+            bot.goForward(-0.5, 7.5);
+            boolean sawTarget = false;
+            for ( int i = 0; i < 9; i++ ) {
+                bot.turnLeft(10, 0.4);
+                if (vu.check()) {
+                    sawTarget = true;
+                    break;
                 }
-                if (sawTarget) {
-                    Directions dirt = vu.getDirections(45, -45);
-                    float dirst = (float) Math.toDegrees(dirt.getHeading());
-                    float dist = dirt.getDistance();
-                    if (dirst > 0) {
-                        bot.turnLeft(dirst, 0.3);
-                    } else {
-                        bot.turnRight(-dirst, 0.3);
-                        bot.goForward(-0.5, 10);
-                        bot.getReady(.9);
-                        while (!vu.check()) {
-                            bot.turnRight(10, 0.4);
-                        }
+                //todo: change to less degrees?
+            }
+            if (sawTarget) {
+                Directions dirt = vu.getDirections(45, 45);
+                float dirst = (float) Math.toDegrees(dirt.getHeading());
+                float dist = dirt.getDistance();
+                if (dirst > 0) {
+                    bot.turnLeft(dirst, 0.3);
+                } else {
+                    bot.turnRight(-dirst, 0.3);
+                    bot.goForward(-0.5, 10);
+                    bot.getReady(.9);
+                    while (!vu.check()) {
+                        bot.turnLeft(10, 0.4);
+                    }
 //                        vu.getDirections(-56, -45);
 //                        dirst = (float) Math.toDegrees(dirt.getHeading());
 //                        dist = dirt.getDistance();
@@ -90,28 +90,30 @@ public class VuBlockGrabTest extends LinearOpMode {
 //                        }
 //                        bot.goForward(0.5, dist);
 //                        bot.getReady(.9);
-                        dirt = vu.getDirections(0, -50);
-                        dirst = (float) Math.toDegrees(dirt.getHeading());
-                        dist = dirt.getDistance();
-                        if (dirst > 0) {
-                            bot.turnLeft(dirst, 0.3);
-                        } else {
-                            bot.turnRight(-dirst, 0.3);
-                        }
-                        bot.goForward(0.5, dist);
+                    dirt = vu.getDirections(0, 45);
+                    dirst = (float) Math.toDegrees(dirt.getHeading());
+                    dist = dirt.getDistance();
+                    if (dirst > 0) {
+                        bot.turnLeft(dirst, 0.3);
+                    } else {
+                        bot.turnRight(-dirst, 0.3);
                     }
-            } else {
-                    bot.goForward(0.7, 60);
-                    bot.goForward(-0.7, 15);
+                    bot.goForward(0.5, dist);
                 }
+            } else {
+                bot.turnLeft(5, 0.5);
+                bot.goForward(0.7, 80);
+                bot.getReady(0.9);
+                bot.goForward(-0.7, 15);
+            }
 
 //             {
 //                telemetry.addData("Working", "NO");
 //                telemetry.update();
-            }
+        }
 //                bot.timeRackOut(4.5f);
-            bot.stopMotor();
-       // }
+        bot.stopMotor();
+        // }
         bot.stopMotor();
         vu.deactivate();
     }
