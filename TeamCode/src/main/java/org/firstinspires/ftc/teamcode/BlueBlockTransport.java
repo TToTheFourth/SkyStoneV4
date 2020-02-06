@@ -17,7 +17,7 @@ public class BlueBlockTransport extends LinearOpMode {
         waitForStart();
         bot.startGyro();
         bot.getReady(.9);
-        bot.forwardUntil(2, 0.3);
+        bot.forwardUntilDistance(2, 0.3);
         //the robot goes forward until the range sensor is close to the blocks,
         // so we don't have to rely on how many inches we need to go
         bot.moveClaw(1);

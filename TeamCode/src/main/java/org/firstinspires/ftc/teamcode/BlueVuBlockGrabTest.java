@@ -32,30 +32,38 @@ public class BlueVuBlockGrabTest extends LinearOpMode {
             //bot.getReady(0.9);
             bot.timeRackOut(4f);
             CameraDevice.getInstance().setFlashTorchMode(true);
-            bot.forwardUntil(10, 0.3);
+            bot.forwardUntilDistance(10, 0.4);
 //            if (!vu.checkForSkystone()) {
 //                vu.checkForSkystone();
             for (int g = 0; g < 11; g++) {
-                if (vu.checkForSkystone()) {
-                    bot.slide(-0.3, 8);
+                if (!opModeIsActive()) {
                     break;
                 }
-                bot.slide(-0.5, 4);
+                if (vu.checkForSkystone()) {
+                    bot.slide(0.5, 8); //this should go left
+                    break;
+                }
+                bot.slide(-0.7, 6);
                 sleep(500);
             }
-            bot.goForward(0.5, 5);
+//            bot.slide(-0.4, 8);
+            bot.goForward(0.5, 6);
             bot.getReady(.3);
-            bot.goForward(-0.5, 7.5);
+            bot.goForward(-0.8, 20);
             boolean sawTarget = false;
-            for ( int i = 0; i < 9; i++ ) {
-                bot.turnLeft(10, 0.4);
+            for (int i = 0; i < 6; i++) {
+                if (!opModeIsActive()) {
+                    break;
+                }
+                bot.turnLeft(11, 0.5);
+                sleep(250);
                 if (vu.check()) {
                     sawTarget = true;
                     break;
                 }
                 //todo: change to less degrees?
             }
-            if (sawTarget) {
+            if (sawTarget && opModeIsActive()) {
                 Directions dirt = vu.getDirections(45, 45);
                 float dirst = (float) Math.toDegrees(dirt.getHeading());
                 float dist = dirt.getDistance();
@@ -63,11 +71,12 @@ public class BlueVuBlockGrabTest extends LinearOpMode {
                     bot.turnLeft(dirst, 0.3);
                 } else {
                     bot.turnRight(-dirst, 0.3);
-                    bot.goForward(-0.5, 10);
-                    bot.getReady(.9);
-                    while (!vu.check()) {
-                        bot.turnLeft(10, 0.4);
-                    }
+                }
+                bot.goForward(0.5, dist);
+                bot.getReady(.9);
+//                    while (!vu.check()) {
+//                        bot.turnLeft(10, 0.4);
+//                    }
 //                        vu.getDirections(-56, -45);
 //                        dirst = (float) Math.toDegrees(dirt.getHeading());
 //                        dist = dirt.getDistance();
@@ -77,7 +86,7 @@ public class BlueVuBlockGrabTest extends LinearOpMode {
 //                            bot.turnRight(-dirst, 0.3);
 //                        }
 //                        bot.goForward(0.5, dist);
-//                        bot.forwardUntil(2, 0.3);
+//                        bot.forwardUntilDistance(2, 0.3);
 //                        bot.slideWhile(0.3);
 //                        bot.getReady(.3);
 //                        dirt = vu.getDirections(45, -45);
@@ -90,21 +99,22 @@ public class BlueVuBlockGrabTest extends LinearOpMode {
 //                        }
 //                        bot.goForward(0.5, dist);
 //                        bot.getReady(.9);
-                    dirt = vu.getDirections(0, 45);
-                    dirst = (float) Math.toDegrees(dirt.getHeading());
-                    dist = dirt.getDistance();
-                    if (dirst > 0) {
-                        bot.turnLeft(dirst, 0.3);
-                    } else {
-                        bot.turnRight(-dirst, 0.3);
-                    }
-                    bot.goForward(0.5, dist);
-                }
+//                    dirt = vu.getDirections(0, 45);
+//                    dirst = (float) Math.toDegrees(dirt.getHeading());
+//                    dist = dirt.getDistance();
+//                    if (dirst > 0) {
+//                        bot.turnLeft(dirst, 0.3);
+//                    } else {
+//                        bot.turnRight(-dirst, 0.3);
+//                    }
+//                    bot.goForward(0.5, dist);
+//                }
             } else {
-                bot.turnLeft(5, 0.5);
-                bot.goForward(0.7, 80);
+                bot.forwardUntilColor(0.5);
+                bot.goForward(0.5, 15);
                 bot.getReady(0.9);
-                bot.goForward(-0.7, 15);
+                bot.forwardUntilColor(-0.5);
+                bot.stopMotor();
             }
 
 //             {

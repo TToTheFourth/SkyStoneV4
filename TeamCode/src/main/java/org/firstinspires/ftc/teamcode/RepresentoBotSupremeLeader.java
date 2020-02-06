@@ -13,6 +13,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
+import java.util.TimerTask;
+
 public class RepresentoBotSupremeLeader {
 
     private static final double MAX_ANGLE = 3.0;
@@ -42,6 +44,13 @@ public class RepresentoBotSupremeLeader {
     private NormalizedColorSensor sensorColor;
     ModernRoboticsI2cRangeSensor rangeSensor;
     private Gyro2 miniGyro;
+
+    class MotorStopper extends TimerTask {
+        public void run() {
+            rackMotor.setPower(0);
+        }
+    }
+    private java.util.Timer timeKeeper = new java.util.Timer();
 
     public RepresentoBotSupremeLeader(LinearOpMode om) {
         this.opMode = om;
@@ -78,6 +87,7 @@ public class RepresentoBotSupremeLeader {
         rackMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //slideMotorF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //trackMotorF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
     }
 
     public void startGyro(){
@@ -159,7 +169,7 @@ public class RepresentoBotSupremeLeader {
         // unlatches both servos, moving them to the up position
     }
 
-    public void forwardUntil(double until, double power) {
+    public void forwardUntilDistance(double until, double power) {
         double rightY_G1 = 1.0 * power;
         double rightX_G1 = 0.0;
         double leftX_G1 = 0.0;
@@ -184,8 +194,8 @@ public class RepresentoBotSupremeLeader {
                 backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1));
                 frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1));
 
-            }else if (miniGyro.getAngle() < -MAX_ANGLE){
-                turnLeft (-ANGLE_ADJ_PERC * miniGyro.getAngle(), ANGLE_ADJ_SPEED);
+            } else if (miniGyro.getAngle() < -MAX_ANGLE) {
+                turnLeft(-ANGLE_ADJ_PERC * miniGyro.getAngle(), ANGLE_ADJ_SPEED);
                 frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1));
                 backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1));
                 backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1));
@@ -201,6 +211,67 @@ public class RepresentoBotSupremeLeader {
         frontRightMotor.setPower(0.0);
         // stops motor
     }
+
+
+        public void forwardUntilColor(double power) {
+            float hsvValues[] = {0F, 0F, 0F};
+
+            // wait for the start button to be pressed.
+
+            double h;
+            double s;
+            double v;
+
+            double rightY_G1 = 1.0 * power;
+            double rightX_G1 = 0.0;
+            double leftX_G1 = 0.0;
+            // sets power
+
+            frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1));
+            backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1));
+            backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1));
+            frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1));
+
+            miniGyro.reset();
+            do {
+                NormalizedRGBA colors = sensorColor.getNormalizedColors();
+                // normalizes the colors so none of the colors have readings that are off the mark
+                // ( a jump of 50 to 1059 )
+                float max = Math.max(Math.max(Math.max(colors.red, colors.green), colors.blue), colors.alpha);
+                colors.red   /= max;
+                colors.green /= max;
+                colors.blue  /= max;
+
+                Color.colorToHSV(colors.toColor(), hsvValues);
+                // changes rbg to hsv
+
+                h = hsvValues[0];
+                s = hsvValues[1];
+                v = hsvValues[2];
+
+                if (miniGyro.getAngle() > MAX_ANGLE) {
+                    turnRight(ANGLE_ADJ_PERC * miniGyro.getAngle(), ANGLE_ADJ_SPEED);
+                    frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1));
+                    backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1));
+                    backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1));
+                    frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1));
+
+                }else if (miniGyro.getAngle() < -MAX_ANGLE){
+                    turnLeft (-ANGLE_ADJ_PERC * miniGyro.getAngle(), ANGLE_ADJ_SPEED);
+                    frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1));
+                    backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1));
+                    backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1));
+                    frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1));
+
+                }
+            } while (35.67 > h && h > 28.61 && 0.392 > s && s > 0.34 && 0.428 > v && v > 0.407);
+
+            frontLeftMotor.setPower(0.0);
+            backLeftMotor.setPower(0.0);
+            backRightMotor.setPower(0.0);
+            frontRightMotor.setPower(0.0);
+            // stops motor
+        }
 
     public void slide (double power, double distance) {
         double rightY_G1 = 0.0;
@@ -313,15 +384,8 @@ public class RepresentoBotSupremeLeader {
     }
 
     public void timeRackOut(float time) {
-        myTimer.setCompareTime((long)(time * 1000));
         rackMotor.setPower(-1);
-        myTimer.start();
-        while (opMode.opModeIsActive()) {
-            if (myTimer.timeChecker()) {
-                break;
-            }
-        }
-        rackMotor.setPower(0);
+        timeKeeper.schedule(new MotorStopper(), 4500);
         // moves the rack for a certain amount of time
     }
 
