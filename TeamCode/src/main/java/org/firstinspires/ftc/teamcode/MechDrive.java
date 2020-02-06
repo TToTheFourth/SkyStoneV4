@@ -31,7 +31,7 @@ public class MechDrive extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         Servo left = hardwareMap.get(Servo.class, "left");
         Servo right = hardwareMap.get(Servo.class, "right");
-        CRServo hammer = hardwareMap.get(CRServo.class, "hammer");
+        Servo hammer = hardwareMap.get(Servo.class, "hammer");
 
         telemetry.update();
 
@@ -96,13 +96,8 @@ public class MechDrive extends LinearOpMode {
                 // releases the claw
 
             // HAMMER!
-            if(gamepad1.dpad_down){
-                hammer.setPower(1);
-            } else if(gamepad1.dpad_up) {
-                hammer.setPower(-1);
-            } else {
-                hammer.setPower(0);
-            }
+            double hamVal = gamepad2.right_trigger;
+            hammer.setPosition(hamVal);
 
             double conPos = gamepad2.left_trigger;
                 if (conPos <= 0) {
