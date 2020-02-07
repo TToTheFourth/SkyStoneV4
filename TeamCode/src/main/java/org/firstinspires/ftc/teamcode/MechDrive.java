@@ -96,7 +96,7 @@ public class MechDrive extends LinearOpMode {
                 // releases the claw
 
             // HAMMER!
-            double hamVal = gamepad2.right_trigger;
+            double hamVal = gamepad2.left_trigger;
             hammer.setPosition(hamVal);
 
             double conPos = gamepad2.left_trigger;

@@ -35,7 +35,7 @@ public class BlueVuBlockGrabTest extends LinearOpMode {
             bot.forwardUntilDistance(10, 0.4);
 //            if (!vu.checkForSkystone()) {
 //                vu.checkForSkystone();
-            for (int g = 0; g < 11; g++) {
+            for (int g = 0; g < 6; g++) {
                 if (!opModeIsActive()) {
                     break;
                 }
@@ -111,7 +111,7 @@ public class BlueVuBlockGrabTest extends LinearOpMode {
 //                }
             } else {
                 bot.forwardUntilColor(0.5);
-                bot.goForward(0.5, 15);
+                bot.goForward(0.5, 22);
                 bot.getReady(0.9);
                 bot.forwardUntilColor(-0.5);
                 bot.stopMotor();

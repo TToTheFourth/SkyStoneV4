@@ -32,18 +32,18 @@ public class VuBlockGrabTest extends LinearOpMode {
             //bot.getReady(0.9);
             bot.timeRackOut(4f);
             CameraDevice.getInstance().setFlashTorchMode(true);
-            bot.forwardUntilDistance(10, 0.4);
+            bot.forwardUntilDistance(12, 0.4);
 //            if (!vu.checkForSkystone()) {
 //                vu.checkForSkystone();
-            for (int g = 0; g < 11; g++) {
+            for (int g = 0; g < 6; g++) {
                 if (!opModeIsActive()) {
                     break;
                 }
                 if (vu.checkForSkystone()) {
-                    bot.slide(0.4, 8);
+                    bot.slide(0.5, 8);
                     break;
                 }
-                bot.slide(0.6, 7);
+                bot.slide(0.6, 5);
                 sleep(250);
             }
             bot.goForward(0.5, 5);
@@ -70,7 +70,7 @@ public class VuBlockGrabTest extends LinearOpMode {
                 float dist = dirt.getDistance();
                 if (dirst > 0) {
                     bot.turnLeft(dirst, 0.3);
-                } else {
+                }// else {
 //                    bot.turnRight(-dirst, 0.3);
 //                    bot.goForward(-0.5, dist);
 //                    bot.getReady(.9);
@@ -109,7 +109,7 @@ public class VuBlockGrabTest extends LinearOpMode {
 //                            bot.turnRight(-dirst, 0.3);
 //                        }
 //                        bot.goForward(0.5, dist);
-                }
+                //  }
             } else {
                 bot.forwardUntilColor(0.5);
                 bot.goForward(0.5, 15);
