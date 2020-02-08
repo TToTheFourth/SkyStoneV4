@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import android.graphics.Color;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @TeleOp
+@Disabled
 public class StopAtColorLine extends LinearOpMode {
 
     //ColorSensor sensorColor;

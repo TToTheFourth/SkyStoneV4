@@ -70,46 +70,7 @@ public class VuBlockGrabTest extends LinearOpMode {
                 float dist = dirt.getDistance();
                 if (dirst > 0) {
                     bot.turnLeft(dirst, 0.3);
-                }// else {
-//                    bot.turnRight(-dirst, 0.3);
-//                    bot.goForward(-0.5, dist);
-//                    bot.getReady(.9);
-
-//                        while (!vu.check()) {
-//                            bot.turnRight(10, 0.4);
-//                        }
-//                        vu.getDirections(-56, -45);
-//                        dirst = (float) Math.toDegrees(dirt.getHeading());
-//                        dist = dirt.getDistance();
-//                        if (dirst > 0) {
-//                            bot.turnLeft(dirst, 0.3);
-//                        } else {
-//                            bot.turnRight(-dirst, 0.3);
-//                        }
-//                        bot.goForward(0.5, dist);
-//                        bot.forwardUntilDistance(2, 0.3);
-//                        bot.slideWhile(0.3);
-//                        bot.getReady(.3);
-//                        dirt = vu.getDirections(45, -45);
-//                        dirst = (float) Math.toDegrees(dirt.getHeading());
-//                        dist = dirt.getDistance();
-//                        if (dirst > 0) {
-//                            bot.turnLeft(dirst, 0.3);
-//                        } else {
-//                            bot.turnRight(-dirst, 0.3);
-//                        }
-//                        bot.goForward(0.5, dist);
-//                        bot.getReady(.9);
-//                        dirt = vu.getDirections(0, -50);
-//                        dirst = (float) Math.toDegrees(dirt.getHeading());
-//                        dist = dirt.getDistance();
-//                        if (dirst > 0) {
-//                            bot.turnLeft(dirst, 0.3);
-//                        } else {
-//                            bot.turnRight(-dirst, 0.3);
-//                        }
-//                        bot.goForward(0.5, dist);
-                //  }
+                }
             } else {
                 bot.forwardUntilColor(0.5);
                 bot.goForward(0.5, 15);
@@ -117,14 +78,6 @@ public class VuBlockGrabTest extends LinearOpMode {
                 bot.forwardUntilColor(-0.5);
                 bot.stopMotor();
             }
-
-//             {
-//                telemetry.addData("Working", "NO");
-//                telemetry.update();
-//            }
-//                bot.timeRackOut(4.5f);
-            bot.stopMotor();
-            // }
             bot.stopMotor();
             vu.deactivate();
         }
