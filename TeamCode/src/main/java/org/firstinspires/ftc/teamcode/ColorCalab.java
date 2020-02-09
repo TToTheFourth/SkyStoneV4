@@ -47,9 +47,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-
-@TeleOp
 @Disabled
+@TeleOp
 public class ColorCalab extends LinearOpMode {
 
     //ColorSensor sensorColor;

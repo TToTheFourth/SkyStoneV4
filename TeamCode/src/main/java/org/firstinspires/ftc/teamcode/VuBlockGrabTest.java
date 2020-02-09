@@ -76,10 +76,9 @@ public class VuBlockGrabTest extends LinearOpMode {
                 bot.goForward(0.5, 15);
                 bot.getReady(0.9);
                 bot.forwardUntilColor(-0.5);
-                bot.stopMotor();
             }
-            bot.stopMotor();
             vu.deactivate();
+            bot.stopMotor();
         }
     }
 }

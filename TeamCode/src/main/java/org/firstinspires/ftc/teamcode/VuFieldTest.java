@@ -7,8 +7,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.vision.Directions;
 import org.firstinspires.ftc.teamcode.vision.VuHolder;
 
-@Autonomous
+
 @Disabled
+@Autonomous
 public class VuFieldTest extends LinearOpMode {
     @Override
     public void runOpMode() {

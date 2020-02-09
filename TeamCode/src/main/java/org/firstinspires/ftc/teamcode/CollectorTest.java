@@ -8,8 +8,8 @@ import com.vuforia.CameraDevice;
 import org.firstinspires.ftc.teamcode.vision.Directions;
 import org.firstinspires.ftc.teamcode.vision.VuHolder;
 
-@Autonomous
 @Disabled
+@Autonomous
 public class CollectorTest extends LinearOpMode {
     @Override
     public void runOpMode() {

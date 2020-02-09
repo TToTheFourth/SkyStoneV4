@@ -381,6 +381,55 @@ public class RepresentoBotSupremeLeader {
         frontRightMotor.setPower(0);
     }
 
+    public void slideWithoutFix (double power, double distance) {
+        double rightY_G1 = 0.0;
+        double rightX_G1 = 0.0;
+        double leftX_G1 = 1.0 * power;
+        // sets power
+
+        double slowperc = 0.6;
+        frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1));
+        backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1));
+        backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1)*slowperc);
+        frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1));
+        // connects power to the correct variables
+
+        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        // sets encoder
+
+        miniGyro.reset();
+        long ticks = ticksToInchesSlide(distance);
+        while (opMode.opModeIsActive()) {
+            int rotations = backLeftMotor.getCurrentPosition();
+            if (rotations<0) {
+                rotations = rotations * -1;
+            }
+            if (rotations >= ticks) {
+                break;
+            }
+
+            if (miniGyro.getAngle() > MAX_ANGLE) {
+                turnRight(ANGLE_ADJ_PERC * miniGyro.getAngle(), ANGLE_ADJ_SPEED);
+                frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1));
+                backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1));
+                backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1)*slowperc);
+                frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1));
+            }else if (miniGyro.getAngle() < -MAX_ANGLE){
+                turnLeft (-ANGLE_ADJ_PERC * miniGyro.getAngle(), ANGLE_ADJ_SPEED);
+                frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1));
+                backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1));
+                backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1)*slowperc);
+                frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1));
+            }
+        }
+        // sets the inches to ticks so the motors understand
+        frontLeftMotor.setPower(0);
+        backLeftMotor.setPower(0);
+        backRightMotor.setPower(0);
+        frontRightMotor.setPower(0);
+    }
+
     public void slideWhile(double power) {
         double rightY_G1 = 0.0;
         double rightX_G1 = 0.0;
@@ -497,6 +546,41 @@ public class RepresentoBotSupremeLeader {
                 backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1));
                 backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1));
                 frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1));
+            }
+            // makes inches transfer to ticks
+        }
+
+        frontLeftMotor.setPower(0.0);
+        backLeftMotor.setPower(0.0);
+        backRightMotor.setPower(0.0);
+        frontRightMotor.setPower(0.0);
+        // sets motors to zero
+    }
+    public void goForwardWithoutFix(double power, double distance){
+        double rightY_G1 = 1.0 * power;
+        double rightX_G1 = 0.0;
+        double leftX_G1 = 0.0;
+        // sets power
+
+        frontLeftMotor.setPower((rightX_G1 + rightY_G1 - leftX_G1));
+        backLeftMotor.setPower((rightX_G1 + rightY_G1 + leftX_G1));
+        backRightMotor.setPower((rightX_G1 - rightY_G1 + leftX_G1));
+        frontRightMotor.setPower((rightX_G1 - rightY_G1 - leftX_G1));
+        // sets the correct variables to the motors
+
+        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        // sets the encoders
+
+        long ticks = ticksToInchesForward(distance);
+        miniGyro.reset();
+        while (opMode.opModeIsActive()) {
+            int rotations = backLeftMotor.getCurrentPosition();
+            if (rotations<0) {
+                rotations = rotations * -1;
+            }
+            if (rotations >= ticks) {
+                break;
             }
             // makes inches transfer to ticks
         }

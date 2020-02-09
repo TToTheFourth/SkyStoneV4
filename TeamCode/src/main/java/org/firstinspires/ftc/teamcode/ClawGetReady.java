@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous
 @Disabled
+@Autonomous
 public class ClawGetReady extends LinearOpMode {
     @Override
     public void runOpMode() {

@@ -12,8 +12,8 @@ import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import java.util.ArrayList;
 import java.util.List;
 
-@TeleOp
 @Disabled
+@TeleOp
 public class StopAtColorLine extends LinearOpMode {
 
     //ColorSensor sensorColor;

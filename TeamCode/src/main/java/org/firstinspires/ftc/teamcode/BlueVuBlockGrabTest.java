@@ -74,47 +74,12 @@ public class BlueVuBlockGrabTest extends LinearOpMode {
                 }
                 bot.goForward(0.5, dist);
                 bot.getReady(.9);
-//                    while (!vu.check()) {
-//                        bot.turnLeft(10, 0.4);
-//                    }
-//                        vu.getDirections(-56, -45);
-//                        dirst = (float) Math.toDegrees(dirt.getHeading());
-//                        dist = dirt.getDistance();
-//                        if (dirst > 0) {
-//                            bot.turnLeft(dirst, 0.3);
-//                        } else {
-//                            bot.turnRight(-dirst, 0.3);
-//                        }
-//                        bot.goForward(0.5, dist);
-//                        bot.forwardUntilDistance(2, 0.3);
-//                        bot.slideWhile(0.3);
-//                        bot.getReady(.3);
-//                        dirt = vu.getDirections(45, -45);
-//                        dirst = (float) Math.toDegrees(dirt.getHeading());
-//                        dist = dirt.getDistance();
-//                        if (dirst > 0) {
-//                            bot.turnLeft(dirst, 0.3);
-//                        } else {
-//                            bot.turnRight(-dirst, 0.3);
-//                        }
-//                        bot.goForward(0.5, dist);
-//                        bot.getReady(.9);
-//                    dirt = vu.getDirections(0, 45);
-//                    dirst = (float) Math.toDegrees(dirt.getHeading());
-//                    dist = dirt.getDistance();
-//                    if (dirst > 0) {
-//                        bot.turnLeft(dirst, 0.3);
-//                    } else {
-//                        bot.turnRight(-dirst, 0.3);
-//                    }
-//                    bot.goForward(0.5, dist);
-//                }
             } else {
                 bot.forwardUntilColor(0.5);
                 bot.goForward(0.5, 22);
                 bot.getReady(0.9);
                 bot.forwardUntilColor(-0.5);
-                bot.stopMotor();
+//                bot.stopMotor();
             }
 
 //             {
